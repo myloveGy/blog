@@ -83,5 +83,3 @@ deploy:
   branch: gh-pages
   message: '我的静态博客'
 
-# 友情链接
-blog_links: [{url: '', title: ''}, {title: '', url: ''}]
