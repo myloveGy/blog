@@ -11,6 +11,8 @@ tags:
 [周琪力原文](http://mp.weixin.qq.com/s?__biz=MzIwNjQwMzUwMQ==&mid=2247484853&idx=1&sn=bed59c1d83c3aeb4bf7881be8dbdd917&chksm=97236777a054ee61fc3cef07eb4b164fa28e26917ce0a409d876964ad3c2ee3f90a000e29beb#rd)
 [原文的demo实现](http://codepen.io/keelii/pen/RoOzgb)
 
+### [vue实现demo展示](https://codepen.io/jinxing/pen/qGZBPN)
+
 效果图：
  ![这里写图片描述](http://img.blog.csdn.net/20171122102024365?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbXlsaXVqeA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
  
