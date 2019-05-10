@@ -3,7 +3,7 @@ layout: posts
 title: React 学习笔记
 date: 2019-05-08 16:32:15
 tags: 
-- React
+- react
 - javascript
 ---
 

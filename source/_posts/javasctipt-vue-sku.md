@@ -3,7 +3,7 @@ title: Vue实现SKU商品展示
 date: 2019-05-10 10:50:57
 tags:
 - javascript
-- Vue
+- vue
 ---
 
 由于公司开发了一个电商项目，涉及到前台商品属性的展示，所以百度上找了一下！找到了 周琪力写的一个算法例子,因为作者只有jQuery 实现demo, 自己仿照 demo 实现了一个 vue 的！
