@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/blog/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon.ico?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/blog/images/favicon.ico?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Pisces',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="目录 高并发解决方案 缓存 MySQL数据库 Nginx  高并发解决方案 硬件方面：   服务器性能： 网络-硬盘读写速度-内存大小-CPU处理数度  软件方面： 服务器： 使用nginx 代替 apache, nginx  开启GZIP压缩优化网站、压缩网站内容可以节省网站流量 构架部署： HTML静态化 前端资源服务器分离(文件单独部署服务器) 数据库集群、库表散列（数据库读写分离、使用索引">
+<meta name="keywords" content="php">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP面试-并发">
+<meta property="og:url" content="https://mylovegy.github.io/blog/2019/05/09/php-concurrent/index.html">
+<meta property="og:site_name" content="刘金星个人博客">
+<meta property="og:description" content="目录 高并发解决方案 缓存 MySQL数据库 Nginx  高并发解决方案 硬件方面：   服务器性能： 网络-硬盘读写速度-内存大小-CPU处理数度  软件方面： 服务器： 使用nginx 代替 apache, nginx  开启GZIP压缩优化网站、压缩网站内容可以节省网站流量 构架部署： HTML静态化 前端资源服务器分离(文件单独部署服务器) 数据库集群、库表散列（数据库读写分离、使用索引">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-13T14:16:31.962Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP面试-并发">
+<meta name="twitter:description" content="目录 高并发解决方案 缓存 MySQL数据库 Nginx  高并发解决方案 硬件方面：   服务器性能： 网络-硬盘读写速度-内存大小-CPU处理数度  软件方面： 服务器： 使用nginx 代替 apache, nginx  开启GZIP压缩优化网站、压缩网站内容可以节省网站流量 构架部署： HTML静态化 前端资源服务器分离(文件单独部署服务器) 数据库集群、库表散列（数据库读写分离、使用索引">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://mylovegy.github.io/blog/2019/05/09/php-concurrent/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>PHP面试-并发 | 刘金星个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">刘金星个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">个人博客</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <a href="https://github.com/myloveGy" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://mylovegy.github.io/blog/blog/2019/05/09/php-concurrent/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jinxing.liu@qq.com">
+      <meta itemprop="description" content="刘金星个人博客">
+      <meta itemprop="image" content="https://iocaffcdn.phphub.org/uploads/avatars/20736_1514188903.jpeg!/both/220x220">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刘金星个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PHP面试-并发
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-09 18:35:33" itemprop="dateCreated datePublished" datetime="2019-05-09T18:35:33+08:00">2019-05-09</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-13 22:16:31" itemprop="dateModified" datetime="2019-05-13T22:16:31+08:00">2019-05-13</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><ul>
+<li><a href="#高并发解决方案">高并发解决方案</a></li>
+<li><a href="#缓存">缓存</a></li>
+<li><a href="#数据库">MySQL数据库</a></li>
+<li><a href="#脚本执行时间超时">Nginx</a></li>
+</ul>
+<h1 id="高并发解决方案"><a href="#高并发解决方案" class="headerlink" title="高并发解决方案"></a>高并发解决方案</h1><ul>
+<li><p>硬件方面：</p>
+<p>  服务器性能： 网络-硬盘读写速度-内存大小-CPU处理数度</p>
+</li>
+<li>软件方面：<ul>
+<li>服务器： 使用nginx 代替 apache, nginx </li>
+<li>开启GZIP压缩优化网站、压缩网站内容可以节省网站流量</li>
+<li>构架部署：<ul>
+<li>HTML静态化</li>
+<li>前端资源服务器分离(文件单独部署服务器)</li>
+<li>数据库集群、库表散列（数据库读写分离、使用索引、分表）</li>
+<li>缓存（redis、memcache）</li>
+<li>负载均衡</li>
+<li>CDN加速</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>PHP:</p>
+<ul>
+<li>升级PHP版本到PHP7</li>
+<li>加载近可能少的模块（关闭不需要的模块）</li>
+<li>使用Opcache</li>
+</ul>
+</li>
+<li><p>代码层面的优化：</p>
+<ul>
+<li>SQL查询的优化</li>
+<li>尽量多使用内置函数</li>
+</ul>
+</li>
+</ul>
+<h1 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h1><h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><h3 id="Redis-简介："><a href="#Redis-简介：" class="headerlink" title="Redis 简介："></a>Redis 简介：</h3><p>Redis 是一个 key/value存储系统。和Memcache类似，它支持存储的value类型相当更多。包括 string(字符串)、list(链表)、set(集合)和zset(有序集合)。这些数据类型都支持 push/pop、add/remove 及取交集和差集及更丰富的操作，而且这些操作都是原子性的。这此基础上，Redis 支持各种不同方式的排序。与Memcached 一样，为了保证效率，数据都是缓存在内存中。区别是 Redis 会周期性的把跟新数据写入磁盘或者把修改操作写入追加的记录文件，并且在此基础上实现master-slave（主从）同步</p>
+<h3 id="Redis支持的数据类型"><a href="#Redis支持的数据类型" class="headerlink" title="Redis支持的数据类型"></a>Redis支持的数据类型</h3><h4 id="String-字符串"><a href="#String-字符串" class="headerlink" title="String(字符串)"></a>String(字符串)</h4><p>string是redis最基本的类型，你可以理解成与Memcached一模一样的类型，一个key对应一个value。<br>string类型是二进制安全的。意思是redis的string可以包含任何数据。比如jpg图片或者序列化的对象.string类型是Redis最基本的数据类型，一个键最大能存储512MB。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">set name &apos;string&apos;</span><br><span class="line">get name</span><br><span class="line">string</span><br></pre></td></tr></table></figure>
+<h4 id="Hash-哈希"><a href="#Hash-哈希" class="headerlink" title="Hash(哈希)"></a>Hash(哈希)</h4><p>Redis hash 是一个键名对集合。<br>Redis hash是一个string类型的field和value的映射表，hash特别适合用于存储对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 设置key 为 user 的 name 字段为 liujx</span><br><span class="line">hset user name liujx</span><br><span class="line">hget user name</span><br><span class="line">liujx</span><br><span class="line"></span><br><span class="line"># 同时设置多个字段</span><br><span class="line">hmset use name ljx age 18 </span><br><span class="line">hmget user name age</span><br><span class="line">ljx</span><br><span class="line">18</span><br></pre></td></tr></table></figure>
+<h4 id="List-列表"><a href="#List-列表" class="headerlink" title="List(列表)"></a>List(列表)</h4><p>Redis 列表是简单的字符串列表，按照插入顺序排序。你可以添加一个元素到列表的头部（左边）或者尾部（右边）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lpush users liujx</span><br><span class="line">rpop users</span><br><span class="line">liujx</span><br></pre></td></tr></table></figure></p>
+<h4 id="Set-集合"><a href="#Set-集合" class="headerlink" title="Set(集合)"></a>Set(集合)</h4><p>Redis的Set是string类型的无序集合。<br>集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是O(1)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sadd key member</span><br></pre></td></tr></table></figure>
+<h4 id="zset-sorted-set：有序集合"><a href="#zset-sorted-set：有序集合" class="headerlink" title="zset(sorted set：有序集合)"></a>zset(sorted set：有序集合)</h4><p>Redis zset 和 set 一样也是string类型元素的集合,且不允许重复的成员。<br>不同的是每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序。<br>zset的成员是唯一的,但分数(score)却可以重复。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zadd key member</span><br></pre></td></tr></table></figure></p>
+<h2 id="Memcache"><a href="#Memcache" class="headerlink" title="Memcache"></a>Memcache</h2><p>Memcache 简介：</p>
+<p>Memcache 是一种高性能、分布式对象缓存系统，最初设计与缓解动态网站数据库加载的延迟性，你可以把它想象成一个大的内存HashTable,就是一个 key/value 键值对缓存</p>
+<h3 id="Redis-和-Memcache-区别"><a href="#Redis-和-Memcache-区别" class="headerlink" title="Redis 和 Memcache 区别"></a>Redis 和 Memcache 区别</h3><ol>
+<li>Redis 支持更加丰富的数据存储类型，String、Hash、List、Set 和 Sorted Set。Memcached 仅支持简单的 key-value 结构。</li>
+<li>Memcached key-value存储比 Redis 采用 hash 结构来做 key-value 存储的内存利用率更高。</li>
+<li>Redis 提供了事务的功能，可以保证一系列命令的原子性</li>
+<li>Redis 支持数据的持久化，可以将内存中的数据保持在磁盘中</li>
+<li>Redis 只使用单核，而 Memcached 可以使用多核，所以平均每一个核上 Redis 在存储小数据时比 Memcached 性能更高。</li>
+</ol>
+<h4 id="Redis-如何实现持久化"><a href="#Redis-如何实现持久化" class="headerlink" title="Redis 如何实现持久化"></a>Redis 如何实现持久化</h4><ol>
+<li>RDB 持久化，将 Redis 在内存中的的状态保存到硬盘中，相当于备份数据库状态。</li>
+<li>AOF 持久化（Append-Only-File），AOF 持久化是通过保存 Redis 服务器锁执行的写状态来记录数据库的。相当于备份数据库接收到的命令，所有被写入 AOF 的命令都是以 Redis 的协议格式来保存的。</li>
+</ol>
+<h1 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h1><h2 id="存储引擎"><a href="#存储引擎" class="headerlink" title="存储引擎"></a>存储引擎</h2><h3 id="MyISAM-与-InnoDB的区别"><a href="#MyISAM-与-InnoDB的区别" class="headerlink" title="MyISAM 与 InnoDB的区别"></a>MyISAM 与 InnoDB的区别</h3><ul>
+<li>InnoDB支持事务，MyISAM不支持，对于InnoDB每一条SQL语言都默认封装成事务，自动提交，这样会影响速度，所以最好把多条SQL语言放在begin和commit之间，组成一个事务</li>
+<li>InnoDB支持外键，而MyISAM不支持</li>
+<li>InnoDB是聚集索引，数据文件是和索引绑在一起的，必须要有主键，通过主键索引效率很高;而MyISAM是非聚集索引，数据文件是分离的，索引保存的是数据文件的指针。主键索引和辅助索引是独立的</li>
+<li>Innodb不支持全文索引，而MyISAM支持全文索引，查询效率上MyISAM要高</li>
+<li>MyISAM只支持表级锁,Innodb支持行级锁;但是InnoDB的行锁，只是在WHERE的主键是有效的，非主键的WHERE都会锁全表的</li>
+</ul>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p>作用</p>
+<ul>
+<li>能够大大提高查询效率</li>
+<li>可以通过建立唯一索引或者主键索引,保证数据库表中每一行数据的唯一性.</li>
+<li>建立索引可以大大提高检索的数据,以及减少表的检索行数</li>
+<li>在分组和排序字句进行数据检索,可以减少查询时间中 分组 和 排序时所消耗的时间(数据库的记录会重新排序)</li>
+</ul>
+<p>索引也会有它的缺点：虽然索引大大提高了查询速度，同时却会降低更新表的速度，如对表进行INSERT、UPDATE和DELETE。因为更新表时，MySQL不仅要保存数据，还要保存一下索引文件。建立索引会占用磁盘空间的索引文件</p>
+<h3 id="普通索引"><a href="#普通索引" class="headerlink" title="普通索引"></a>普通索引</h3><p>这是最基本的索引，它没有任何限制，比如上文中为title字段创建的索引就是一个普通索引，MyIASM中默认的BTREE类型的索引，也是我们大多数情况下用到的索引。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">–- 直接创建索引</span><br><span class="line">CREATE INDEX index_name ON table(column(length))</span><br><span class="line"></span><br><span class="line">–- 修改表结构的方式添加索引</span><br><span class="line">ALTER TABLE table_name ADD INDEX index_name ON (column(length))</span><br><span class="line"></span><br><span class="line">–- 创建表的时候同时创建索引</span><br><span class="line">CREATE TABLE `table` (</span><br><span class="line">    `id` int(11) NOT NULL AUTO_INCREMENT,</span><br><span class="line">    `title` char(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,</span><br><span class="line">    `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL ,</span><br><span class="line">    `time` int(10) NULL DEFAULT NULL,</span><br><span class="line">    PRIMARY KEY (`id`),</span><br><span class="line">    INDEX index_name (title(length))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">–- 删除索引</span><br><span class="line">DROP INDEX index_name ON table</span><br></pre></td></tr></table></figure>
+<h3 id="唯一索引"><a href="#唯一索引" class="headerlink" title="唯一索引"></a>唯一索引</h3><p>与普通索引类似，不同的就是：索引列的值必须唯一，但允许有空值（注意和主键不同）。如果是组合索引，则列值的组合必须唯一，创建方法和普通索引类似。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">–- 创建唯一索引</span><br><span class="line">CREATE UNIQUE INDEX indexName ON table(column(length))</span><br><span class="line"></span><br><span class="line">–- 修改表结构</span><br><span class="line">ALTER TABLE table_name ADD UNIQUE indexName ON (column(length))</span><br><span class="line"></span><br><span class="line">–- 创建表的时候直接指定</span><br><span class="line">CREATE TABLE `table` (</span><br><span class="line">    `id` int(11) NOT NULL AUTO_INCREMENT ,</span><br><span class="line">    `title` char(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,</span><br><span class="line">    `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL ,</span><br><span class="line">    `time` int(10) NULL DEFAULT NULL ,</span><br><span class="line">    PRIMARY KEY (`id`),</span><br><span class="line">    UNIQUE indexName (title(length))</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h3 id="全文索引"><a href="#全文索引" class="headerlink" title="全文索引"></a>全文索引</h3><p>MySQL从3.23.23版开始支持全文索引和全文检索，FULLTEXT索引仅可用于 MyISAM 表；他们可以从CHAR、VARCHAR或TEXT列中作为CREATE TABLE语句的一部分被创建，或是随后使用ALTER TABLE 或CREATE INDEX被添加。////对于较大的数据集，将你的资料输入一个没有FULLTEXT索引的表中，然后创建索引，其速度比把资料输入现有FULLTEXT索引的速度更为快。不过切记对于大容量的数据表，生成全文索引是一个非常消耗时间非常消耗硬盘空间的做法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">–- 修改表结构添加全文索引</span><br><span class="line">ALTER TABLE article ADD FULLTEXT index_content(content)</span><br><span class="line"></span><br><span class="line">–- 直接创建索引</span><br><span class="line">CREATE FULLTEXT INDEX index_content ON article(content)</span><br><span class="line"></span><br><span class="line">–- 创建表的时候直接指定</span><br><span class="line">CREATE TABLE `table` (</span><br><span class="line">    `id` int(11) NOT NULL AUTO_INCREMENT ,</span><br><span class="line">    `title` char(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,</span><br><span class="line">    `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL ,</span><br><span class="line">    `time` int(10) NULL DEFAULT NULL ,</span><br><span class="line">    PRIMARY KEY (`id`),</span><br><span class="line">    FULLTEXT (content)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+<h3 id="单列索引、多列索引"><a href="#单列索引、多列索引" class="headerlink" title="单列索引、多列索引"></a>单列索引、多列索引</h3><p>多个单列索引与单个多列索引的查询效果不同，因为执行查询时，MySQL只能使用一个索引，会从多个索引中选择一个限制最为严格的索引。</p>
+<h3 id="组合索引-最左前缀"><a href="#组合索引-最左前缀" class="headerlink" title="组合索引(最左前缀)"></a>组合索引(最左前缀)</h3><p>多个单列索引与单个多列索引的查询效果不同，因为执行查询时，MySQL只能使用一个索引，会从多个索引中选择一个限制最为严格的索引。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-- 建立的索引</span><br><span class="line">ALTER TABLE `article` ADD INDEX `index_titme_time` (`title`(50), `time`(10));</span><br><span class="line"></span><br><span class="line">-- 使用上面索引</span><br><span class="line">SELECT * FROM `article` WHREE `title` = &apos;测试&apos; AND `time` = 1234567890;</span><br><span class="line">SELECT * FROM `article` WHREE `title` = &apos;测试&apos;;</span><br><span class="line"></span><br><span class="line">-- 没有使用索引</span><br><span class="line">SELECT * FROM `article` WHREE `time` = 1234567890;</span><br></pre></td></tr></table></figure></p>
+<h4 id="创建原则"><a href="#创建原则" class="headerlink" title="创建原则"></a>创建原则</h4><ul>
+<li>选择唯一性索引</li>
+<li>为经常需要排序、分组和联合操作的字段建立索引</li>
+<li>为常作为查询条件的字段建立索引</li>
+<li>限制索引的数目</li>
+<li>尽量使用数据量少的索引</li>
+<li>尽量使用前缀来索引</li>
+<li>删除不再使用或者很少使用的索引</li>
+<li>最左前缀匹配原则，非常重要的原则</li>
+<li>尽量选择区分度高的列作为索引</li>
+<li>索引列不能参与计算，保持列“干净”</li>
+<li>尽量的扩展索引，不要新建索引</li>
+</ul>
+<h4 id="索引优化"><a href="#索引优化" class="headerlink" title="索引优化"></a>索引优化</h4><p>MySQL只对一下操作符才使用索引：&lt;,&lt;=,=,&gt;,&gt;=,between,in,以及某些时候的like(不以通配符%或_开头的情形)</p>
+<h2 id="SQL优化"><a href="#SQL优化" class="headerlink" title="SQL优化"></a>SQL优化</h2><h4 id="索引问题"><a href="#索引问题" class="headerlink" title="索引问题"></a>索引问题</h4><ul>
+<li>避免对索引字符进行计算</li>
+<li>避免在索引字段上面使用not,&lt;&gt;,!=</li>
+<li>避免在索引字段列上使用IS NULL 和 IS NOT NULL</li>
+<li>避免在索引字段列上出现数据类型转换</li>
+<li>避免在索引字段上使用函数</li>
+<li>避免建立的索引列中存在空值</li>
+</ul>
+<h4 id="前导模糊查询不能使用索引"><a href="#前导模糊查询不能使用索引" class="headerlink" title="前导模糊查询不能使用索引"></a>前导模糊查询不能使用索引</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- 没有使用索引</span><br><span class="line">SELECT * FROM `order` WHERE `desc` LIKE &apos;%abc&apos;</span><br><span class="line"></span><br><span class="line">-- 使用索引</span><br><span class="line">SELECT * FROM `order` WHERE `desc` LIKE &apos;abc%&apos;</span><br></pre></td></tr></table></figure>
+<h4 id="明确知道只有一条数据-limit-1-可以提高效率"><a href="#明确知道只有一条数据-limit-1-可以提高效率" class="headerlink" title="明确知道只有一条数据,limit 1 可以提高效率"></a>明确知道只有一条数据,limit 1 可以提高效率</h4><h4 id="不用使用SELECT-而是指定查询字段"><a href="#不用使用SELECT-而是指定查询字段" class="headerlink" title="不用使用SELECT * 而是指定查询字段"></a>不用使用SELECT * 而是指定查询字段</h4><h1 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h1><h2 id="nginx-php-fpm-出现502问题排查"><a href="#nginx-php-fpm-出现502问题排查" class="headerlink" title="nginx + php-fpm 出现502问题排查"></a>nginx + php-fpm 出现502问题排查</h2><p>nginx出现502有很多原因，但大部分原因可以归结为资源数量不够用,也就是说后端php-fpm处理有问题，nginx将正确的客户端请求发给了后端的php-fpm进程，但是因为php-fpm进程的问题导致不能正确解析php代码，最终返回给了客户端502错误。</p>
+<h4 id="php-fpm-进程数不够用"><a href="#php-fpm-进程数不够用" class="headerlink" title="php-fpm 进程数不够用"></a>php-fpm 进程数不够用</h4><p>使用 netstat -napo |grep “php-fpm” | wc -l 查看一下当前fastcgi进程个数，如果个数接近conf里配置的上限，就需要调高进程数。<br>但也不能无休止调高，可以根据服务器内存情况，可以把php-fpm子进程数调到100或以上，在4G内存的服务器上200就可以</p>
+<h4 id="调高调高linux内核打开文件数量"><a href="#调高调高linux内核打开文件数量" class="headerlink" title="调高调高linux内核打开文件数量"></a>调高调高linux内核打开文件数量</h4><p>可以使用这些命令(必须是root帐号)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo &apos;ulimit -HSn 65536&apos; &gt;&gt; /etc/profile</span><br><span class="line">echo &apos;ulimit -HSn 65536&apos; &gt;&gt; /etc/rc.local</span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+<h4 id="脚本执行时间超时"><a href="#脚本执行时间超时" class="headerlink" title="脚本执行时间超时"></a>脚本执行时间超时</h4><p>如果脚本因为某种原因长时间等待不返回 ，导致新来的请求不能得到处理，可以适当调小如下配置。</p>
+<ul>
+<li><p>nginx.conf里面主要是如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fastcgi_connect_timeout 300;</span><br><span class="line">fastcgi_send_timeout 300;</span><br><span class="line">fastcgi_read_timeout 300;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>php-fpm.conf里如要是如下</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request_terminate_timeout = 10s</span><br></pre></td></tr></table></figure>
+<h4 id="缓存设置比较小"><a href="#缓存设置比较小" class="headerlink" title="缓存设置比较小"></a>缓存设置比较小</h4><p>修改或增加配置到nginx.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">proxy_buffer_size 64k;</span><br><span class="line">proxy_buffers  512k;</span><br><span class="line">proxy_busy_buffers_size 128k;</span><br></pre></td></tr></table></figure>
+<p>这部分参见: <a href="http://www.nginx.cn/102.html" target="_blank" rel="noopener">http://www.nginx.cn/102.html</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/php/" rel="tag"># php</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2019/05/09/php-basis2/" rel="next" title="PHP面试-基础二">
+                <i class="fa fa-chevron-left"></i> PHP面试-基础二
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2019/05/10/mongo/" rel="prev" title="MongoDB学习">
+                MongoDB学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://iocaffcdn.phphub.org/uploads/avatars/20736_1514188903.jpeg!/both/220x220" alt="jinxing.liu@qq.com">
+            
+              <p class="site-author-name" itemprop="name">jinxing.liu@qq.com</p>
+              <div class="site-description motion-element" itemprop="description">刘金星个人博客</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/blog/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/blog/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/myloveGy" title="GitHub &rarr; https://github.com/myloveGy" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:jinxing.liu@qq.com" title="E-Mail &rarr; mailto:jinxing.liu@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#目录"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#高并发解决方案"><span class="nav-number"></span> <span class="nav-text">高并发解决方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#缓存"><span class="nav-number"></span> <span class="nav-text">缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis"><span class="nav-number"></span> <span class="nav-text">Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-简介："><span class="nav-number"></span> <span class="nav-text">Redis 简介：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis支持的数据类型"><span class="nav-number"></span> <span class="nav-text">Redis支持的数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#String-字符串"><span class="nav-number">1.</span> <span class="nav-text">String(字符串)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hash-哈希"><span class="nav-number">2.</span> <span class="nav-text">Hash(哈希)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#List-列表"><span class="nav-number">3.</span> <span class="nav-text">List(列表)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Set-集合"><span class="nav-number">4.</span> <span class="nav-text">Set(集合)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zset-sorted-set：有序集合"><span class="nav-number">5.</span> <span class="nav-text">zset(sorted set：有序集合)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Memcache"><span class="nav-number"></span> <span class="nav-text">Memcache</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-和-Memcache-区别"><span class="nav-number"></span> <span class="nav-text">Redis 和 Memcache 区别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis-如何实现持久化"><span class="nav-number">1.</span> <span class="nav-text">Redis 如何实现持久化</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据库"><span class="nav-number"></span> <span class="nav-text">数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#存储引擎"><span class="nav-number"></span> <span class="nav-text">存储引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MyISAM-与-InnoDB的区别"><span class="nav-number"></span> <span class="nav-text">MyISAM 与 InnoDB的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引"><span class="nav-number"></span> <span class="nav-text">索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#普通索引"><span class="nav-number"></span> <span class="nav-text">普通索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#唯一索引"><span class="nav-number"></span> <span class="nav-text">唯一索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全文索引"><span class="nav-number"></span> <span class="nav-text">全文索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单列索引、多列索引"><span class="nav-number"></span> <span class="nav-text">单列索引、多列索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组合索引-最左前缀"><span class="nav-number"></span> <span class="nav-text">组合索引(最左前缀)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建原则"><span class="nav-number">1.</span> <span class="nav-text">创建原则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#索引优化"><span class="nav-number">2.</span> <span class="nav-text">索引优化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL优化"><span class="nav-number"></span> <span class="nav-text">SQL优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#索引问题"><span class="nav-number">1.</span> <span class="nav-text">索引问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#前导模糊查询不能使用索引"><span class="nav-number">2.</span> <span class="nav-text">前导模糊查询不能使用索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#明确知道只有一条数据-limit-1-可以提高效率"><span class="nav-number">3.</span> <span class="nav-text">明确知道只有一条数据,limit 1 可以提高效率</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不用使用SELECT-而是指定查询字段"><span class="nav-number">4.</span> <span class="nav-text">不用使用SELECT * 而是指定查询字段</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nginx"><span class="nav-number"></span> <span class="nav-text">Nginx</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx-php-fpm-出现502问题排查"><span class="nav-number"></span> <span class="nav-text">nginx + php-fpm 出现502问题排查</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#php-fpm-进程数不够用"><span class="nav-number">1.</span> <span class="nav-text">php-fpm 进程数不够用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调高调高linux内核打开文件数量"><span class="nav-number">2.</span> <span class="nav-text">调高调高linux内核打开文件数量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#脚本执行时间超时"><span class="nav-number">3.</span> <span class="nav-text">脚本执行时间超时</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缓存设置比较小"><span class="nav-number">4.</span> <span class="nav-text">缓存设置比较小</span></a></li></ol></li></ol></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jinxing.liu@qq.com</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.1</div>
+
+
+
+
+
+<div>
+  <div class="theme-info">
+    优秀博客：
+      <a href="http://blog.fifsky.com/" rel="noopener" target="_blank">fifsky的技术笔记</a>
+    <span class="post-meta-divider">|</span>
+    <a href="http://www.littlebug.vip/" rel="noopener" target="_blank">littlebug</a>
+  </div>
+</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/blog/js/utils.js?v=7.1.1"></script>
+
+  <script src="/blog/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/blog/js/affix.js?v=7.1.1"></script>
+
+  <script src="/blog/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+  
+  <script src="/blog/js/scrollspy.js?v=7.1.1"></script>
+<script src="/blog/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/blog/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

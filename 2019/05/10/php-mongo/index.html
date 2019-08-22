@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/blog/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon.ico?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/blog/images/favicon.ico?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Pisces',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="PHP连接MongoDB12345678910$connection = new Mongo();// 负载均衡$conn = new Mongo(&amp;apos;localhost&amp;apos;, array(&amp;apos;replicaSet&amp;apos; =&amp;gt; true));// 持久连接$conn = new Mongo(&amp;apos;localhost&amp;apos;, array(&amp;apos;p">
+<meta name="keywords" content="mongodb,php">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP操作MongoDB">
+<meta property="og:url" content="https://mylovegy.github.io/blog/2019/05/10/php-mongo/index.html">
+<meta property="og:site_name" content="刘金星个人博客">
+<meta property="og:description" content="PHP连接MongoDB12345678910$connection = new Mongo();// 负载均衡$conn = new Mongo(&amp;apos;localhost&amp;apos;, array(&amp;apos;replicaSet&amp;apos; =&amp;gt; true));// 持久连接$conn = new Mongo(&amp;apos;localhost&amp;apos;, array(&amp;apos;p">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-13T14:16:31.962Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP操作MongoDB">
+<meta name="twitter:description" content="PHP连接MongoDB12345678910$connection = new Mongo();// 负载均衡$conn = new Mongo(&amp;apos;localhost&amp;apos;, array(&amp;apos;replicaSet&amp;apos; =&amp;gt; true));// 持久连接$conn = new Mongo(&amp;apos;localhost&amp;apos;, array(&amp;apos;p">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://mylovegy.github.io/blog/2019/05/10/php-mongo/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>PHP操作MongoDB | 刘金星个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">刘金星个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">个人博客</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <a href="https://github.com/myloveGy" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://mylovegy.github.io/blog/blog/2019/05/10/php-mongo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jinxing.liu@qq.com">
+      <meta itemprop="description" content="刘金星个人博客">
+      <meta itemprop="image" content="https://iocaffcdn.phphub.org/uploads/avatars/20736_1514188903.jpeg!/both/220x220">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刘金星个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PHP操作MongoDB
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-10 10:36:38" itemprop="dateCreated datePublished" datetime="2019-05-10T10:36:38+08:00">2019-05-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-13 22:16:31" itemprop="dateModified" datetime="2019-05-13T22:16:31+08:00">2019-05-13</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="PHP连接MongoDB"><a href="#PHP连接MongoDB" class="headerlink" title="PHP连接MongoDB"></a>PHP连接MongoDB</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$connection = new Mongo();</span><br><span class="line"></span><br><span class="line">// 负载均衡</span><br><span class="line">$conn = new Mongo(&apos;localhost&apos;, array(&apos;replicaSet&apos; =&gt; true));</span><br><span class="line"></span><br><span class="line">// 持久连接</span><br><span class="line">$conn = new Mongo(&apos;localhost&apos;, array(&apos;persist&apos; =&gt; &apos;t&apos;));</span><br><span class="line">    </span><br><span class="line">// 带用户名和密码</span><br><span class="line">$conn = new Mongo(&apos;mongodb://root:123@localhost&apos;);</span><br></pre></td></tr></table></figure>
+<h4 id="选择数据库-和-集合"><a href="#选择数据库-和-集合" class="headerlink" title="选择数据库 和 集合"></a>选择数据库 和 集合</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 选择数据库</span><br><span class="line">$db = $connection-&gt;mydata;</span><br><span class="line"></span><br><span class="line">// 选择集合</span><br><span class="line">$collection = $db-&gt;user;                  </span><br><span class="line">// 选择集合的另一种方式</span><br><span class="line">$collection = $db-&gt;selectCollection(&apos;user&apos;);</span><br><span class="line"></span><br><span class="line">// 简洁写法</span><br><span class="line">$collection = $db-&gt;mydata-&gt;user;</span><br></pre></td></tr></table></figure>
+<h4 id="添加数据"><a href="#添加数据" class="headerlink" title="添加数据"></a>添加数据</h4><ul>
+<li><p>简单新增</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * $collection-&gt;insert() ) ^.^ ---&gt;</span><br><span class="line"> * insert($array[, $arr = array(</span><br><span class="line"> *  &apos;safe&apos; =&gt; false,</span><br><span class="line"> *  &apos;fsync&apos; =&gt; false,</span><br><span class="line"> *  &apos;timeout&apos; =&gt; 10000,</span><br><span class="line"> * )])</span><br><span class="line"> * @param array $array 添加数据信息</span><br><span class="line"> * @param $arr 额外参数信息( 可选 )</span><br><span class="line"> *        $arr[&apos;safe&apos;]    boolean 是否安全写入(false)</span><br><span class="line"> *        $arr[&apos;fsync&apos;]    boolean 是否强制插入到同步磁盘(false)</span><br><span class="line"> *        $arr[&apos;timeout&apos;] int        超时间( 毫秒 )</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">// 简单新增 , 返回布尔值 bool(true)</span><br><span class="line">$result = $collection-&gt;insert(array(</span><br><span class="line">    &apos;username&apos; =&gt; &apos;myCeshi&apos;,</span><br><span class="line">    &apos;age&apos; =&gt; 12,</span><br><span class="line">    &apos;time&apos; =&gt; time(),</span><br><span class="line">    &apos;skills&apos; =&gt; array(&apos;php&apos;, &apos;javascript&apos;, &apos;css&apos;, &apos;html&apos;),</span><br><span class="line">));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>向集合中安全插入数据,返回插入状态(数组)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// 用于等待MongoDB完成操作,以便确定是否成功(当有大量记录插入时使用该参数会比较有用)</span><br><span class="line">$result = $collection-&gt;insert(array(</span><br><span class="line">    &apos;username&apos; =&gt; &apos;liujx&apos;,</span><br><span class="line">    &apos;age&apos; =&gt; 22,</span><br><span class="line">);, true);  </span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line">    return array(</span><br><span class="line">        &apos;connectionId&apos; =&gt; int 10</span><br><span class="line">        &apos;n&apos; =&gt; int 0</span><br><span class="line">        &apos;syncMillis&apos; =&gt; int 0</span><br><span class="line">        &apos;writtenTo&apos; =&gt; null</span><br><span class="line">        &apos;err&apos; =&gt; null</span><br><span class="line">        &apos;ok&apos; =&gt; float 1</span><br><span class="line">    ) ;</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="更新数据"><a href="#更新数据" class="headerlink" title="更新数据"></a>更新数据</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * update(</span><br><span class="line">    array $criteria, </span><br><span class="line">    array $new[, </span><br><span class="line">    array $options = array()</span><br><span class="line">    ]</span><br><span class="line"> )</span><br><span class="line"> * @param    array $criteria 查询修改对象数组</span><br><span class="line"> * @param    array $new 修改成的新对象数组</span><br><span class="line"> * @param    array $options 更新的其他设置数组</span><br><span class="line"> * @return    boolean 返回布尔值</span><br><span class="line"> *</span><br><span class="line"> * 更新数据说明</span><br><span class="line"> * $inc    自增</span><br><span class="line"> * $set    修改</span><br><span class="line"> * $unset    删除字段</span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>修改更新 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 修改一条</span><br><span class="line">$result = $collection-&gt;update(</span><br><span class="line">    array(</span><br><span class="line">        &apos;username&apos; =&gt; &apos;myCeshi&apos;</span><br><span class="line">    ), </span><br><span class="line">    array(</span><br><span class="line">        &apos;$set&apos; =&gt; array(</span><br><span class="line">            &apos;username&apos; =&gt; &apos;myTitle&apos;,</span><br><span class="line">            &apos;name&apos; =&gt; &apos;xiaoTitle&apos;</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>替换更新</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 替换一条</span><br><span class="line">$result = $collection-&gt;update(</span><br><span class="line">    array(</span><br><span class="line">        &apos;username&apos; =&gt; &apos;myCeshi&apos;</span><br><span class="line">    ), </span><br><span class="line">    array(</span><br><span class="line">        &apos;myname&apos; =&gt; &apos;123&apos;, </span><br><span class="line">        &apos;title&apos; =&gt; &apos;nonoe&apos;</span><br><span class="line">    )</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>批量更新 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$update = array();</span><br><span class="line">$result = $collection-&gt;update(</span><br><span class="line">    array(</span><br><span class="line">        &apos;username&apos; =&gt; &apos;myCeshi&apos;</span><br><span class="line">    ), </span><br><span class="line">    array(</span><br><span class="line">        &apos;$set&apos; =&gt; array(</span><br><span class="line">            &apos;myname&apos; =&gt; &apos;123&apos;, </span><br><span class="line">            &apos;title&apos; =&gt; &apos;nonoe&apos;</span><br><span class="line">        )</span><br><span class="line">    ), </span><br><span class="line">    array(</span><br><span class="line">        &apos;multiple&apos; =&gt; true</span><br><span class="line">    )</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自动累加 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// age累加5( 修改一条 )</span><br><span class="line">$result = $collection-&gt;update(</span><br><span class="line">    array(</span><br><span class="line">        &apos;username&apos; =&gt; &apos;myTitle&apos;</span><br><span class="line">    ), </span><br><span class="line">    array(</span><br><span class="line">        &apos;$inc&apos; =&gt; array(</span><br><span class="line">            &apos;age&apos; =&gt; 5</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="删除数据-remove"><a href="#删除数据-remove" class="headerlink" title="删除数据 remove()"></a>删除数据 remove()</h4><ul>
+<li><p>删除指定数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$result = $collection-&gt;remove(array(</span><br><span class="line">    &apos;username&apos; =&gt; &apos;myTitle&apos;</span><br><span class="line">));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>清空集合</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$collection-&gt;remove();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除指定的MongoId</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$id = new MongoId(&apos;557016db90428ba817000012&apos;);</span><br><span class="line">$result = $collection-&gt;remove(array(&apos;_id&apos; =&gt; $id));</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="查询数据-find-和-findOne"><a href="#查询数据-find-和-findOne" class="headerlink" title="查询数据 find() 和 findOne()"></a>查询数据 find() 和 findOne()</h4><ul>
+<li>查询数据数目 count()<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$num = $collection-&gt;count();</span><br><span class="line"></span><br><span class="line">// 查询满足条件的数据</span><br><span class="line">$num = $collection-&gt;count(array(</span><br><span class="line">    &apos;username&apos; =&gt; &apos;liujx&apos;</span><br><span class="line">));   </span><br><span class="line"></span><br><span class="line">// 查询满足条件数据条数</span><br><span class="line">$num = $collection-&gt;count(array(</span><br><span class="line">    &apos;age&apos; =&gt; array(</span><br><span class="line">        &apos;$gt&apos; =&gt; 12, </span><br><span class="line">        &apos;$lt&apos; =&gt; 30</span><br><span class="line">    )</span><br><span class="line">));</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol>
+<li>$gt为大于</li>
+<li>$gte为大于等于</li>
+<li>$lt为小于</li>
+<li>$lte为小于等于</li>
+<li>$ne为不等于</li>
+<li>$exists不存在</li>
+</ol>
+<ul>
+<li><p>findOne() 查询一条数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * findOne() 查询一条数据</span><br><span class="line"> * @param    array $criteria 查询条件数组</span><br><span class="line"> * @return    array    返回数组( 没有数据返回 null )</span><br><span class="line"> */</span><br><span class="line">$data = $collection-&gt;findOne();</span><br><span class="line">$data = $collection-&gt;findOne(array(</span><br><span class="line">    &apos;username&apos; =&gt; &apos;liujx&apos;</span><br><span class="line">));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>find() 查询数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * find() 查询数据</span><br><span class="line"> * @param    array $criteria 查询条件数组</span><br><span class="line"> * @return  object    返回对象( 没有返回 null )</span><br><span class="line"> * 注意:</span><br><span class="line"> * 在我们做了find()操作，获得$cursor游标之后，这个游标还是动态的.</span><br><span class="line"> * 换句话说,在我find()之后,到我的游标循环完成这段时间,如果再有符合条件的记录被插入到collection,那么这些记录也会被$cursor 获得.</span><br><span class="line"> * 如果你想在获得$cursor之后的结果集不变化,需要这样做：</span><br><span class="line"> * $cursor = $collection-&gt;find();</span><br><span class="line"> * $cursor-&gt;snapshot();</span><br><span class="line"> */</span><br><span class="line">$data = $collection-&gt;find();                        // 查询所有数据,返回对象</span><br><span class="line">foreach ($data as $key =&gt; $value) &#123;</span><br><span class="line">    // var_dump($value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol>
+<li><p>限制查询条数limit()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data = $collection-&gt;find()-&gt;limit(5);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>确定查询开始位置skip()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data = $collection-&gt;find()-&gt;limit(10)-&gt;skip(5);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>排序条件查询sort() </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$data = $collection-&gt;find()-&gt;limit(10)-&gt;sort(array(&apos;_id&apos; =&gt; -1));</span><br><span class="line">// $data = $data-&gt;snapshot() ; 					# 排序和snapshot();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>指定查询的列 fields() true 显示 false 不显示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$data = $collection-&gt;find()-&gt;limit(10)-&gt;fields(array(&apos;_id&apos; =&gt; false));    // _id 列不显示</span><br><span class="line">// $data = $collection-&gt;find()-&gt;limit(10)-&gt;sort(array(&apos;_id&apos; =&gt; -1 ))-&gt;fields(array(&apos;username&apos;=&gt; true)) ; # 只显示username(_id默认显示)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="索引操作-ensureIndex"><a href="#索引操作-ensureIndex" class="headerlink" title="索引操作 ensureIndex()"></a>索引操作 ensureIndex()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * ensureIndex(</span><br><span class="line">        array(), </span><br><span class="line">        array(</span><br><span class="line">            &apos;name&apos; =&gt;&apos;索引名称&apos;,</span><br><span class="line">            &apos;background&apos; =&gt; true , </span><br><span class="line">            &apos;unique&apos; =&gt; true</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line"> * 详见:http://www.php.net/manual/en/mongocollection.ensureindex.php</span><br><span class="line"> */</span><br><span class="line"> </span><br><span class="line">// 表示降序 -1表示升序</span><br><span class="line">$collection-&gt;ensureIndex(array(</span><br><span class="line">    &apos;age&apos; =&gt; 1, </span><br><span class="line">    &apos;type&apos; =&gt; -1</span><br><span class="line">));</span><br><span class="line"></span><br><span class="line">// 索引的创建放在后台运行(默认是同步运行)</span><br><span class="line">$collection-&gt;ensureIndex(</span><br><span class="line">    array(</span><br><span class="line">        &apos;age&apos; =&gt; 1, </span><br><span class="line">        &apos;type&apos; =&gt; -1</span><br><span class="line">    ), </span><br><span class="line">    array(</span><br><span class="line">        &apos;background&apos; =&gt; true</span><br><span class="line">    )</span><br><span class="line">); </span><br><span class="line"></span><br><span class="line">// 该索引是唯一的</span><br><span class="line">$collection-&gt;ensureIndex(</span><br><span class="line">    array(</span><br><span class="line">        &apos;age&apos; =&gt; 1, </span><br><span class="line">        &apos;type&apos; =&gt; -1</span><br><span class="line">    ), </span><br><span class="line">    array(</span><br><span class="line">        &apos;unique&apos; =&gt; true</span><br><span class="line">    )</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h4 id="关闭连接-close"><a href="#关闭连接-close" class="headerlink" title="关闭连接 close()"></a>关闭连接 close()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$connection-&gt;close();</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/mongodb/" rel="tag"># mongodb</a>
+          
+            <a href="/blog/tags/php/" rel="tag"># php</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2019/05/10/mongo/" rel="next" title="MongoDB学习">
+                <i class="fa fa-chevron-left"></i> MongoDB学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2019/05/10/php-yii2/" rel="prev" title="Yii2学习笔记">
+                Yii2学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://iocaffcdn.phphub.org/uploads/avatars/20736_1514188903.jpeg!/both/220x220" alt="jinxing.liu@qq.com">
+            
+              <p class="site-author-name" itemprop="name">jinxing.liu@qq.com</p>
+              <div class="site-description motion-element" itemprop="description">刘金星个人博客</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/blog/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/blog/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/myloveGy" title="GitHub &rarr; https://github.com/myloveGy" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:jinxing.liu@qq.com" title="E-Mail &rarr; mailto:jinxing.liu@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#PHP连接MongoDB"><span class="nav-number">1.</span> <span class="nav-text">PHP连接MongoDB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选择数据库-和-集合"><span class="nav-number">2.</span> <span class="nav-text">选择数据库 和 集合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加数据"><span class="nav-number">3.</span> <span class="nav-text">添加数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新数据"><span class="nav-number">4.</span> <span class="nav-text">更新数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除数据-remove"><span class="nav-number">5.</span> <span class="nav-text">删除数据 remove()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查询数据-find-和-findOne"><span class="nav-number">6.</span> <span class="nav-text">查询数据 find() 和 findOne()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#索引操作-ensureIndex"><span class="nav-number">7.</span> <span class="nav-text">索引操作 ensureIndex()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关闭连接-close"><span class="nav-number">8.</span> <span class="nav-text">关闭连接 close()</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jinxing.liu@qq.com</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.1</div>
+
+
+
+
+
+<div>
+  <div class="theme-info">
+    优秀博客：
+      <a href="http://blog.fifsky.com/" rel="noopener" target="_blank">fifsky的技术笔记</a>
+    <span class="post-meta-divider">|</span>
+    <a href="http://www.littlebug.vip/" rel="noopener" target="_blank">littlebug</a>
+  </div>
+</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/blog/js/utils.js?v=7.1.1"></script>
+
+  <script src="/blog/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/blog/js/affix.js?v=7.1.1"></script>
+
+  <script src="/blog/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+  
+  <script src="/blog/js/scrollspy.js?v=7.1.1"></script>
+<script src="/blog/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/blog/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

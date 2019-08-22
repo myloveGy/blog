@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/blog/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon.ico?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/blog/images/favicon.ico?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Pisces',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="控制器控制器周期beforeAction123456789101112/** * action 运行的前置操作  * * 比较适合统一化的数据验证，请求数据的接受等 * @param \yii\base\Action $action action 类 * @return bool 返回ture 控制器周期才会走下去 */public function beforeAction($action)&amp;#">
+<meta name="keywords" content="php,yii2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Yii2学习笔记">
+<meta property="og:url" content="https://mylovegy.github.io/blog/2019/05/10/php-yii2/index.html">
+<meta property="og:site_name" content="刘金星个人博客">
+<meta property="og:description" content="控制器控制器周期beforeAction123456789101112/** * action 运行的前置操作  * * 比较适合统一化的数据验证，请求数据的接受等 * @param \yii\base\Action $action action 类 * @return bool 返回ture 控制器周期才会走下去 */public function beforeAction($action)&amp;#">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-13T14:16:31.963Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Yii2学习笔记">
+<meta name="twitter:description" content="控制器控制器周期beforeAction123456789101112/** * action 运行的前置操作  * * 比较适合统一化的数据验证，请求数据的接受等 * @param \yii\base\Action $action action 类 * @return bool 返回ture 控制器周期才会走下去 */public function beforeAction($action)&amp;#">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://mylovegy.github.io/blog/2019/05/10/php-yii2/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Yii2学习笔记 | 刘金星个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">刘金星个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">个人博客</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <a href="https://github.com/myloveGy" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://mylovegy.github.io/blog/blog/2019/05/10/php-yii2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jinxing.liu@qq.com">
+      <meta itemprop="description" content="刘金星个人博客">
+      <meta itemprop="image" content="https://iocaffcdn.phphub.org/uploads/avatars/20736_1514188903.jpeg!/both/220x220">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刘金星个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Yii2学习笔记
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-10 10:37:42" itemprop="dateCreated datePublished" datetime="2019-05-10T10:37:42+08:00">2019-05-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-13 22:16:31" itemprop="dateModified" datetime="2019-05-13T22:16:31+08:00">2019-05-13</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="控制器"><a href="#控制器" class="headerlink" title="控制器"></a>控制器</h1><h2 id="控制器周期"><a href="#控制器周期" class="headerlink" title="控制器周期"></a>控制器周期</h2><h3 id="beforeAction"><a href="#beforeAction" class="headerlink" title="beforeAction"></a>beforeAction</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * action 运行的前置操作 </span><br><span class="line"> *</span><br><span class="line"> * 比较适合统一化的数据验证，请求数据的接受等</span><br><span class="line"> * @param \yii\base\Action $action action 类</span><br><span class="line"> * @return bool 返回ture 控制器周期才会走下去</span><br><span class="line"> */</span><br><span class="line">public function beforeAction($action)</span><br><span class="line">&#123;</span><br><span class="line">    var_dump($action-&gt;id, $action-&gt;controller-&gt;id);</span><br><span class="line">    return parent::beforeAction($action); // TODO: Change the autogenerated stub</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="afterAction"><a href="#afterAction" class="headerlink" title="afterAction"></a>afterAction</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * action 后置操作</span><br><span class="line"> *</span><br><span class="line"> * 比较适合返回最后的日志搜集</span><br><span class="line"> * @param \yii\base\Action $action action 类</span><br><span class="line"> * @param mixed $result</span><br><span class="line"> * @return mixed</span><br><span class="line"> */</span><br><span class="line">public function afterAction($action, $result)</span><br><span class="line">&#123;</span><br><span class="line">    return parent::afterAction($action, $result); // TODO: Change the autogenerated stub</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h1><h2 id="AR-模型-常用方法"><a href="#AR-模型-常用方法" class="headerlink" title="AR 模型 常用方法"></a>AR 模型 常用方法</h2><h3 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 查询单条</span><br><span class="line">$one = Post::find()-&gt;where([&apos;id&apos; =&gt; 1])-&gt;one();</span><br><span class="line">// 或者</span><br><span class="line">$one = Post::finOne(1);</span><br><span class="line"></span><br><span class="line">// 查询多条</span><br><span class="line">$posts = Post::find()-&gt;where([&apos;status&apos; =&gt; 1])-&gt;all();</span><br><span class="line">// 或者</span><br><span class="line">$posts = Post::findAll([&apos;status&apos; =&gt; 1]);</span><br><span class="line"></span><br><span class="line">// 通过sql查询</span><br><span class="line">$posts = Post::findBySql(&apos;SELECT * FROM `posts` WHERE `status` = :status&apos;, [&apos;:status&apos; =&gt; 1])-&gt;all();</span><br></pre></td></tr></table></figure>
+<h3 id="查询条件的设定"><a href="#查询条件的设定" class="headerlink" title="查询条件的设定"></a>查询条件的设定</h3><h4 id="where-查询支持的参数"><a href="#where-查询支持的参数" class="headerlink" title="where 查询支持的参数"></a>where 查询支持的参数</h4><ul>
+<li><p>字符串格式 例如: ‘status=1’</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 对应的SQL: WHERE status = 1</span><br><span class="line">$query-&gt;where(&apos;status = 1&apos;);</span><br><span class="line">// 使用字符串方式,可以绑定参数</span><br><span class="line">$query-&gt;where(&apos;status = :status&apos;, [&apos;:status&apos; =&gt; 1])</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>哈希格式 例如: [‘status’ =&gt; 1, ‘type’ =&gt; 1]</p>
+</li>
+</ul>
+<p>哈希格式最适合用来指定多个 AND 串联起来的简单的”等于断言”子条件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 对应的SQL: WHERE (`status`=1) AND (`type`=1)</span><br><span class="line">$query-&gt;where([&apos;status&apos; =&gt; 1, &apos;type&apos; =&gt; 1])</span><br><span class="line">// 如果值为一个数组会转为IN 对应SQL: WHERE (`status`=1) AND (`type` IN (1, 2, 3))</span><br><span class="line">$query-&gt;where([&apos;status&apos; =&gt; 1, &apos;type&apos; =&gt; [1, 2, 3]])</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>操作符格式 例如:  [‘=’, ‘status’, 1]</li>
+</ul>
+<p>可以实现比较复杂的查询条件</p>
+<ol>
+<li><p>格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&apos;操作符&apos;, 操作数1, 操作数2, ...];</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>演示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// 简单单个查询 对应的SQL: WHERE `status` &gt;= 1</span><br><span class="line">$query-&gt;where([&apos;&gt;=&apos;, &apos;status&apos;, 1])</span><br><span class="line"></span><br><span class="line">// 多个条件 AND 连接 对应的SQL: WHERE (`status` &gt;= 1) AND (`type` &lt;= 3)</span><br><span class="line">$query-&gt;where([&apos;and&apos;, [&apos;&gt;=&apos;, &apos;status&apos;, 1], [&apos;&lt;=&apos;, &apos;type&apos;, 3]])</span><br><span class="line"></span><br><span class="line">// 多个条件 OR 连接 对应SQL: WHERE (`status` IN (1, 3)) OR (`type` &gt;= 2)</span><br><span class="line">$query-&gt;where(&apos;or&apos;, [&apos;in&apos;, &apos;status&apos;, [1, 3], [&apos;&gt;=&apos;, &apos;type&apos;, 2]])</span><br><span class="line"></span><br><span class="line">// 比较复杂组合的SQL 对应SQL: WHERE (`create_type` = 6) AND (`status` = 0) AND (`is_fail` = 0) AND (((`last_view_time` = 0) AND (`create_time` &lt;= 1503562511)) OR ((`last_view_time` &gt; 0) AND (`last_view_time` &lt;= 1503562511)))</span><br><span class="line">$query-&gt;where([</span><br><span class="line">     &apos;and&apos;,</span><br><span class="line">    [&apos;=&apos;, &apos;create_type&apos;, 6],</span><br><span class="line">    [&apos;=&apos;, &apos;status&apos;, 0],</span><br><span class="line">    [&apos;=&apos;, &apos;is_fail&apos;, 0],</span><br><span class="line">    [&apos;or&apos;,</span><br><span class="line">        [&apos;and&apos;, [&apos;=&apos;, &apos;last_view_time&apos;, 0], [&apos;&lt;=&apos;, &apos;create_time&apos;, time()]],</span><br><span class="line">        [&apos;and&apos;, [&apos;&gt;&apos;, &apos;last_view_time&apos;, 0], [&apos;&lt;=&apos;, &apos;last_view_time&apos;, time()]]</span><br><span class="line">    ]</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>操作符说明</p>
+<ul>
+<li>and 和 or 确定多个条件通过什么方式连接</li>
+<li><p>between 和 not between</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 数组需要四个元素 对应SQL: WHERE `id` BETWEEN 1 AND 10</span><br><span class="line">[&apos;between&apos;, &apos;id&apos;, 1, 10]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>in 和 not in </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 对应SQL: WHERE `status` IN (1, 3)</span><br><span class="line">[&apos;in&apos;, &apos;status&apos;, [1, 3]]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>like</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 默认 对应SQL: WHERE `name` LIKE &apos;%username%&apos;</span><br><span class="line">[&apos;like&apos;, &apos;name&apos;, &apos;username&apos;] </span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 第二个范围值是一个数组，那么将会生成用 AND 串联起来的 多个 like 语句</span><br><span class="line"> * 对应SQL: WHERE `name` LIKE &apos;%user%&apos; AND `name` LIKE &apos;%name%&apos;</span><br><span class="line"> */</span><br><span class="line">[&apos;like&apos;, &apos;name&apos;, [&apos;user&apos;, &apos;name&apos;]]</span><br><span class="line"></span><br><span class="line">// 使用前缀查询 对应SQL: WHERE `name` LIKE &apos;user%&apos;</span><br><span class="line">[&apos;like&apos;, &apos;name&apos;, &apos;user%&apos;, false]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>or like 与like 相同,只是第二个范围值是一个数组，那么将会生成用 OR 串联起来的 多个 like 语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 对应的SQL: WHERE `name` LIKE &apos;%user%&apos; OR `name` LIKE &apos;%name%&apos;</span><br><span class="line">[&apos;or like&apos;, &apos;name&apos;, [&apos;user&apos;, &apos;name&apos;]]</span><br><span class="line"></span><br><span class="line">// 自己定义前缀查询还是后缀查询 对应SQL: WHERE `name` LIKE &apos;user%&apos; OR `name` LIKE &apos;%name&apos;</span><br><span class="line">[&apos;or like&apos;, &apos;name&apos;, [&apos;user%&apos;, &apos;%name&apos;], false]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>not like 和 or not like 和 like 与 or like 用法相同</p>
+</li>
+<li>exists 和 not exists 需要一个操作数，该操作数必须是代表子查询 yii\db\Query 的一个实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 生成的SQL: WHERE EXISTS (SELECT * FROM `user` WHERE `status` = 1)</span><br><span class="line">$queryOne = new Query();</span><br><span class="line">$queryOne-&gt;from(&apos;user&apos;)-&gt;where([&apos;=&apos;, &apos;status&apos;, 1])-&gt;one();</span><br><span class="line">$query-&gt;where([&apos;exists&apos;, $queryOne])</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<pre><code>- \&gt;, &gt;=, =, &lt;, &lt;=
+</code></pre><ul>
+<li><p>andWhere 和 orWhere 在原有条件的基础上 附加额外的条件。你可以多次调用这些方法来分别追加不同的条件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 对应SQL: WHERE (`status` = 1) AND (`type` &gt;= 1)</span><br><span class="line">$query-&gt;where([&apos;=&apos;, &apos;status&apos;, 1]);</span><br><span class="line">$query-&gt;andWhere([&apos;&gt;=&apos;, &apos;type&apos;, 1]);</span><br><span class="line"></span><br><span class="line">// 对应的SQL: WHERE ((`status`=1) AND (`type`=1)) OR (`name`=&apos;username&apos;)</span><br><span class="line">$query-&gt;where([&apos;status&apos; =&gt; 1, &apos;type&apos; =&gt; 1]);</span><br><span class="line">$query-&gt;orWhere([&apos;name&apos; =&gt; &apos;username&apos;]);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>filterWhere 过滤查询(在用户输入查询的时候比较好用) 会忽略空值(null, ‘’, ‘ ‘, [])</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 不会添加查询条件</span><br><span class="line">$status = &apos;&apos;; // null, &apos; &apos;, [] 都不会添加查询条件</span><br><span class="line">$query-&gt;filterWhere([&apos;status&apos; =&gt;  $status]);</span><br><span class="line"></span><br><span class="line">// 添加查询条件: WHERE `status` = 0</span><br><span class="line">$status = 0;</span><br><span class="line">$query-&gt;filterWhere([&apos;status&apos; =&gt; $status]);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="建议查询时候直接使用where-方法中传递数组的方式定义where条件-andWhere-和-orWhere-会增加判断"><a href="#建议查询时候直接使用where-方法中传递数组的方式定义where条件-andWhere-和-orWhere-会增加判断" class="headerlink" title="建议查询时候直接使用where() 方法中传递数组的方式定义where条件; andWhere() 和 orWhere() 会增加判断"></a>建议查询时候直接使用where() 方法中传递数组的方式定义where条件; andWhere() 和 orWhere() 会增加判断</h4><h3 id="查询对象转数组"><a href="#查询对象转数组" class="headerlink" title="查询对象转数组"></a>查询对象转数组</h3><p>asArray() 方法</p>
+<p>在对查询数据没有其他操作的情况下,建议都转为数组(能够节省内存)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 查询出来是一个数组</span><br><span class="line">$posts = Post::find()-&gt;where([&apos;status&apos; =&gt; 1])-&gt;asArray()-&gt;all();</span><br></pre></td></tr></table></figure>
+<h3 id="指定数组的键"><a href="#指定数组的键" class="headerlink" title="指定数组的键"></a>指定数组的键</h3><p>indexBy() 方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$users = User::find()-&gt;where([&apos;status&apos; =&gt; 1])-&gt;asArray()-&gt;indexBy(&apos;id&apos;)-&gt;all();</span><br><span class="line"></span><br><span class="line">// 查询出来的数组</span><br><span class="line">[</span><br><span class="line">    &apos;1&apos; =&gt; [</span><br><span class="line">        &apos;id&apos; =&gt; 1,</span><br><span class="line">        &apos;status&apos; =&gt; 1,</span><br><span class="line">        &apos;username&apos; =&gt; &apos;username&apos;</span><br><span class="line">    ],</span><br><span class="line">    &apos;3&apos; =&gt; [</span><br><span class="line">        &apos;id&apos; =&gt; 3,</span><br><span class="line">        &apos;status&apos; =&gt; 1,</span><br><span class="line">        &apos;username&apos; =&gt; &apos;my name&apos;</span><br><span class="line">    ],</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line">// 这样查询出来的数组，判断指定ID的用户是否存在比较方法(特别是循环中)</span><br><span class="line">if (isset($user[1])) &#123;</span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><p>现在后台程序需要显示文章信息,并且需要显示文章的作者信息</p>
+<p>两个表的结构</p>
+<p>文章表 article<br>字段名 | 字段说明<br>—|—<br>id | 文章ID<br>user_id | 文章作者ID<br>title | 文章标题</p>
+<p>用户表 user</p>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>字段说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>用户ID</td>
+</tr>
+<tr>
+<td>name</td>
+<td>用户姓名</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>方案一 使用表关联</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">// Article 模型类中定义关联关系</span><br><span class="line">class Article extends ActiveRecord</span><br><span class="line">&#123;</span><br><span class="line">    public function getUser()</span><br><span class="line">    &#123;</span><br><span class="line">        return $this-&gt;hasOne(User::className(), [&apos;id&apos; =&gt; &apos;user_id&apos;]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 使用</span><br><span class="line"> *</span><br><span class="line"> * 说明这里也是只使用了两次查询</span><br><span class="line"> * 第一次: SELECT * FROM `article` LIMIT 10</span><br><span class="line"> * 第二次: SELECT * FROM `user` WHERE `id` IN (1, 2, ...)</span><br><span class="line"> */</span><br><span class="line">$arrArticles = Article::find()-&gt;with(&apos;user&apos;)-&gt;limit(10)-&gt;asArray()-&gt;all();</span><br><span class="line">if ($arrArticles) &#123;</span><br><span class="line">    foreach ($arrArticles as $article) &#123;</span><br><span class="line">        if (isset($article[&apos;user&apos;])) &#123;</span><br><span class="line">            // 使用作者名称</span><br><span class="line">            $article[&apos;user&apos;][&apos;name&apos;];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方案二 使用indexBy()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// 第一步查询出文章信息</span><br><span class="line">$arrArticles = Article::find()-&gt;limit(10)-&gt;asArray()-&gt;all();</span><br><span class="line"></span><br><span class="line">// 第二步获取到用户信息</span><br><span class="line">if ($arrArticles) &#123;</span><br><span class="line">    // 获取到用户ID </span><br><span class="line">    $arrUserIds = array_column($arrArticles, &apos;user_id&apos;);</span><br><span class="line">    // 查询到客户信息</span><br><span class="line">    $arrUsers = User::find()-&gt;where([&apos;id&apos; =&gt; $arrUserIds])-&gt;indexBy(&apos;id&apos;)-&gt;asArray()-&gt;all();</span><br><span class="line">    // 三 将用户名称追加到文章信息中</span><br><span class="line">    foreach ($arrArticles as &amp;$value) &#123;</span><br><span class="line">        $value[&apos;user_name&apos;] = &apos;&apos;;</span><br><span class="line">        if (isset($arrUsers[$value[&apos;user_id&apos;]])) &#123;</span><br><span class="line">            $value[&apos;user_name&apos;] = $arrUsers[$value[&apos;user_id&apos;]][&apos;name&apos;];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="批处理查询"><a href="#批处理查询" class="headerlink" title="批处理查询"></a>批处理查询</h3><p>当需要处理大数据的时候，像 yii\db\Query::all() 这样的方法就不太合适了， 因为它们会把所有数据都读取到内存上。为了保持较低的内存需求， Yii 提供了一个 所谓的批处理查询的支持。批处理查询会利用数据游标 将数据以批为单位取出来。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">use yii\db\Query;</span><br><span class="line"></span><br><span class="line">$query = (new Query())</span><br><span class="line">    -&gt;from(&apos;user&apos;)</span><br><span class="line">    -&gt;orderBy(&apos;id&apos;);</span><br><span class="line"></span><br><span class="line">foreach ($query-&gt;batch() as $users) &#123;</span><br><span class="line">    // $users 是一个包含100条或小于100条用户表数据的数组</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// or if you want to iterate the row one by one</span><br><span class="line">foreach ($query-&gt;each() as $user) &#123;</span><br><span class="line">    // $user 指代的是用户表当中的其中一行数据</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>yii\db\Query::batch() 和 yii\db\Query::each() 方法将会返回一个实现了Iterator 接口 yii\db\BatchQueryResult 的对象，可以用在 foreach 结构当中使用。在第一次迭代取数据的时候， 数据库会执行一次 SQL 查询，然后在剩下的迭代中，将直接从结果集中批量获取数据。默认情况下， 一批的大小为 100，也就意味着一批获取的数据是 100 行。你可以通过给 batch() 或者 each() 方法的第一个参数传值来改变每批行数的大小。</p>
+<h3 id="查看执行语句"><a href="#查看执行语句" class="headerlink" title="查看执行语句"></a>查看执行语句</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 可以通过yii 自带的 debug 工具查看</span><br><span class="line"></span><br><span class="line">// 通过model 类</span><br><span class="line">// 查看执行SQL: SELECT * FROM `user` WHERE `status` IN (1, 2)</span><br><span class="line">var_dump(User::find()-&gt;where([&apos;status&apos; =&gt; [1, 2, 3]])-&gt;createCommand()-&gt;getRawSql());</span><br><span class="line"></span><br><span class="line">// 查看预处理的SQL: SELECT * FROM `user` WHERE `status` IN (:qp0, :qp1)</span><br><span class="line">var_dump(User::find()-&gt;where([&apos;status&apos; =&gt; [1, 2, 3]])-&gt;createCommand()-&gt;getSql());</span><br></pre></td></tr></table></figure>
+<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><h3 id="验证规则定义"><a href="#验证规则定义" class="headerlink" title="验证规则定义"></a>验证规则定义</h3><p>定义格式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 第一个字段可以为字符串,也可以是数组</span><br><span class="line">[[验证字段], 验证规则, 其他配置项...]</span><br><span class="line"></span><br><span class="line">// 为字符串的时候必须为单个字段</span><br><span class="line">[&apos;username&apos;, &apos;required&apos;, &apos;message&apos; =&gt; &apos;用户名不能为空&apos;]</span><br><span class="line"></span><br><span class="line">// 多个字段验证</span><br><span class="line">[[&apos;username&apos;, &apos;password&apos;], &apos;required&apos;]</span><br></pre></td></tr></table></figure></p>
+<p>例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 在模型的 rules 方法中定义</span><br><span class="line">public function rules()</span><br><span class="line">&#123;</span><br><span class="line">    return [</span><br><span class="line">        // 不能为空</span><br><span class="line">        [[&apos;username&apos;, &apos;passwrod&apos;], &apos;required&apos;],</span><br><span class="line">        // 必须唯一</span><br><span class="line">        [[&apos;username&apos;], &apos;unique&apos;],</span><br><span class="line">    ];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="验证规则类型"><a href="#验证规则类型" class="headerlink" title="验证规则类型"></a>验证规则类型</h3><p>说明<br>一般提示信息可以不用填写,会自动匹配 attributeLabels() 方法返回的字段说明信息</p>
+<ul>
+<li><p>required: 必须值验证 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// requiredValue, message 可以不用填写</span><br><span class="line">[[&apos;字段名&apos;], &apos;required&apos;, &apos;requiredValue&apos; =&gt; &apos;必填值&apos;, &apos;message&apos; =&gt; &apos;提示信息&apos;]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>email 邮箱格式验证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&apos;email&apos;, &apos;email&apos;]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>match 正则表达事验证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[[&apos;字段名&apos;], &apos;match&apos;, &apos;pattern&apos; =&gt; &apos;正则表达式&apos;]</span><br><span class="line">// 正则取反</span><br><span class="line">[[&apos;字段名&apos;], &apos;match&apos;, &apos;pattern&apos; =&gt; &apos;正则表达式&apos;, &apos;not&apos; =&gt; true]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>url 网址信息验证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 验证https 或者 http 的网址</span><br><span class="line">[&apos;字段名&apos;, &apos;url&apos;]</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 输入字段可以不带 http 前缀,默认帮你添加</span><br><span class="line"> * 输入的值可以是 www.baidu.com 也可以是 http://www.baidu.com</span><br><span class="line"> * 输入 www.baidu.com 会帮你加上 http:// 最终为 http://www.baidu.com</span><br><span class="line"> */</span><br><span class="line">[[&apos;字段名&apos;], &apos;url&apos;, &apos;defaultScheme&apos; =&gt; &apos;http&apos;]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>captcha 验证码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&apos;验证码字段&apos;, &apos;captcha&apos;]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>compare 比较</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// compareValue 比较值 operator 比较类型</span><br><span class="line">[&apos;字段&apos;, &apos;compare&apos;, &apos;compareValue&apos; =&gt; 30, &apos;operator&apos; =&gt; &apos;&gt;=&apos;]</span><br><span class="line"></span><br><span class="line">// 比较两个字段的值(确认密码需要与密码一致)</span><br><span class="line">[[&apos;confirm_password&apos;], &apos;compare&apos;, &apos;compareAttribute&apos; =&gt; &apos;password&apos;]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>default 默认值 当字段为空那么赋默认值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// value 定义默认值</span><br><span class="line">[&apos;字段&apos;, &apos;default&apos;, &apos;value&apos; =&gt; 30]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>exist 验证存在</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 验证数据username 在表中必须存在</span><br><span class="line">[&apos;username&apos;, &apos;exist&apos;]</span><br><span class="line"></span><br><span class="line">// 定义查询的model, 用户名在admin 表中是否存在</span><br><span class="line">[&apos;username&apos;, &apos;exist&apos;, &apos;targetClass&apos; =&gt; Admin::className()]</span><br><span class="line"></span><br><span class="line">// 定义数据的字段</span><br><span class="line">[&apos;username&apos;, &apos;exist&apos;, &apos;targetAttribute&apos; =&gt; &apos;name&apos;]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>unique 唯一性验证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * targetClass 可以配置查询那个表</span><br><span class="line"> * targetAttribute 可以定义对应的字段信息</span><br><span class="line"> */</span><br><span class="line">[&apos;username&apos;, &apos;unique&apos;]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>file 文件验证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * extension 允许上传的文件类型</span><br><span class="line"> * 其他配置项</span><br><span class="line"> * checkExtensionByMimeType 是否使用mime类型检查文件类型（扩展名）</span><br><span class="line"> * mimeTypes 允许的mimeTypes 类型</span><br><span class="line"> * minSize 文件最小大小</span><br><span class="line"> * maxSize 文件最大大小</span><br><span class="line"> * 其他配置...</span><br><span class="line"> */</span><br><span class="line">[[&apos;file&apos;], &apos;file&apos;, &apos;extensions&apos; =&gt; [&apos;png&apos;, &apos;jpg&apos;, &apos;gif&apos;, &apos;jpeg&apos;]]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>image 图片验证 继承于 File</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * image 验证继承于 file 验证</span><br><span class="line"> * file 定义的验证配置都可以使用</span><br><span class="line"> * 其他配置</span><br><span class="line"> * minWidth, minHeight, maxWidth, maxLength, ...</span><br><span class="line"> */</span><br><span class="line">[&apos;image&apos;, &apos;image&apos;, &apos;minWidth&apos; =&gt; 100]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>filter 滤镜[trim]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * filter 制定过滤的函数 可以使用匿名函数</span><br><span class="line"> * skipOnArray 是否跳过数组过滤</span><br><span class="line"> */</span><br><span class="line">[&apos;username&apos;, &apos;filter&apos;, &apos;filter&apos; =&gt; &apos;trim&apos;, &apos;skipOnArray&apos; =&gt; true]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>trim 处理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[&apos;username&apos;, &apos;password&apos;], &apos;trim&apos;]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>in 范围值验证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// range 定义范围值</span><br><span class="line">[&apos;status&apos;, &apos;in&apos;, &apos;range&apos; =&gt; [1, 2]]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>integer 整数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&apos;age&apos;, &apos;integer&apos;]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>number 数字</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&apos;money&apos;, &apos;number&apos;]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>double 浮点数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&apos;money&apos;, &apos;double&apos;]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>string 字符串验证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * length 定义字符串最小长度和最大长度</span><br><span class="line"> * min, max 单独定义指定最小,最大长度</span><br><span class="line"> */</span><br><span class="line">[&apos;title&apos;, &apos;string&apos;, &apos;length&apos; =&gt; [1, 2]]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>boolean 布尔值验证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * strict 定义是否严格验证</span><br><span class="line"> */</span><br><span class="line">[&apos;字段名&apos;, &apos;boolean&apos;, &apos;trueValue&apos; =&gt; true, &apos;falseValue&apos; =&gt; false, &apos;strict&apos; =&gt; true]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>date 日期验证[data, time, datetime]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&apos;start_time&apos;, &apos;date&apos;]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ip 验证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[&apos;user_ip&apos;], &apos;ip&apos;]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="自定义验证规则"><a href="#自定义验证规则" class="headerlink" title="自定义验证规则"></a>自定义验证规则</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class User extends Model</span><br><span class="line">&#123;</span><br><span class="line">    public function rules()</span><br><span class="line">    &#123;</span><br><span class="line">        return [</span><br><span class="line">            [&apos;username&apos;, &apos;validateUser&apos;, &apos;params&apos; =&gt; [1, 2, 3]]</span><br><span class="line">        ];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    /**</span><br><span class="line">     * 自定义验证处理</span><br><span class="line">     *</span><br><span class="line">     * @desc 函数写的时候可以不接受参数</span><br><span class="line">     * @param string $attribute 字段名称</span><br><span class="line">     * @param mixed $params rules 中定义的params 参数信息</span><br><span class="line">     * @param \yii\validators\InlineValidator $validator 验证类</span><br><span class="line">     */</span><br><span class="line">    public function validateUser($attribute, $params, $validator)</span><br><span class="line">    &#123;</span><br><span class="line">        if ($this-&gt;user == 2) &#123;</span><br><span class="line">            $this-&gt;addError($attribute, &apos;不能等于二&apos;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="验证规则生效条件"><a href="#验证规则生效条件" class="headerlink" title="验证规则生效条件"></a>验证规则生效条件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 可以定义指定验证的生效条件</span><br><span class="line">[</span><br><span class="line">    [&apos;passowrd&apos;], </span><br><span class="line">    &apos;required&apos;, </span><br><span class="line">    </span><br><span class="line">    // 指定服务器验证什么时候生效(当状态为1的时候密码不能为空)</span><br><span class="line">    &apos;when&apos; =&gt; function ($model) &#123;</span><br><span class="line">        return $model-&gt;status == 1;</span><br><span class="line">    &#125;,</span><br><span class="line">    </span><br><span class="line">    // 前端js 验证什么时候生效</span><br><span class="line">    &apos;whenClient&apos; =&gt; &quot;function(attribute, value) &#123;</span><br><span class="line">        return $(&apos;#status&apos;).val() == 1;</span><br><span class="line">    &#125;&quot;,</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<h3 id="验证场景"><a href="#验证场景" class="headerlink" title="验证场景"></a>验证场景</h3><p>model 可能在不同的场景下使用，不同场景对应不同的业务逻辑，需要验证的字段和方式也就不一样，这个时候就需要用到验证场景</p>
+<h4 id="定义验证场景"><a href="#定义验证场景" class="headerlink" title="定义验证场景"></a>定义验证场景</h4><p>model 中定义验证场景<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class User extends Model</span><br><span class="line">&#123;</span><br><span class="line">    public function scenarios()</span><br><span class="line">    &#123;</span><br><span class="line">        // 默认验证场景 default 的验证字段</span><br><span class="line">        $scenarios = parent::scenarios();</span><br><span class="line">        </span><br><span class="line">        // 登录时候，验证用户名和密码</span><br><span class="line">        $scenarios[&apos;login&apos;] = [&apos;username&apos;, &apos;password&apos;];</span><br><span class="line">        </span><br><span class="line">        // 注册的时候要验证用户名、密码、确认密码</span><br><span class="line">        $scenarios[&apos;register&apos;] = [&apos;username&apos;, &apos;password&apos;, &apos;confirm_password&apos;];</span><br><span class="line">        return $scenarios;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="为规则指定验证场景"><a href="#为规则指定验证场景" class="headerlink" title="为规则指定验证场景"></a>为规则指定验证场景</h4><p>还是上面那个model<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 定义验证规则</span><br><span class="line"> */</span><br><span class="line">public function rules</span><br><span class="line">&#123;</span><br><span class="line">   return [</span><br><span class="line">        // 一样定义通用验证</span><br><span class="line">        [[&apos;username&apos;, &apos;password&apos;], &apos;trim&apos;],</span><br><span class="line">   </span><br><span class="line">        // on 定义使用的验证场景 可以是字符串，也可以是数组</span><br><span class="line">        [[&apos;username&apos;, &apos;password&apos;], &apos;required&apos;, &apos;on&apos; =&gt; [&apos;login&apos;, &apos;register&apos;]],</span><br><span class="line">        [&apos;confirm_password&apos;, &apos;required&apos;, &apos;on&apos; =&gt; &apos;register&apos;],</span><br><span class="line">        [&apos;confirm_password&apos;, &apos;compare&apos;, &apos;compareAttribute&apos; =&gt; &apos;password&apos;, &apos;on&apos; =&gt; &apos;register&apos;],</span><br><span class="line">   ]; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="使用验证场景"><a href="#使用验证场景" class="headerlink" title="使用验证场景"></a>使用验证场景</h4><p> 一般在控制器中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public function actionLogin()</span><br><span class="line">&#123;</span><br><span class="line">    // 使用验证场景</span><br><span class="line">    $user = new User();</span><br><span class="line">    $user-&gt;scenario = &apos;login&apos;;</span><br><span class="line">    </span><br><span class="line">    // 或者在实例化指定验证场景</span><br><span class="line">    $user = new User([&apos;scenario&apos; =&gt; &apos;login&apos;]);</span><br><span class="line">    </span><br><span class="line">    // 对model的属性进行赋值</span><br><span class="line">    $user-&gt;username = &apos;123&apos;;</span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line">    // 显示的调用验证</span><br><span class="line">    if ($user-&gt;validate()) &#123;</span><br><span class="line">        // 通过验证</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        // 获取到错误信息</span><br><span class="line">        var_dump($user-&gt;getErrors());</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    /**</span><br><span class="line">     * 执行save()的时候会调用validate() 方法</span><br><span class="line">     * 除非save() 调用时指定不走验证</span><br><span class="line">     * $user-&gt;save(false)</span><br><span class="line">     */</span><br><span class="line">    if ($user-&gt;save()) &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;  else &#123;</span><br><span class="line">        var_dump($user-&gt;getErrors());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="验证规则使用注意"><a href="#验证规则使用注意" class="headerlink" title="验证规则使用注意"></a>验证规则使用注意</h4><p>执行验证是通过rules 中的规则，从上往下验证的，一旦验证不通过，不会向下验证, 建议关于数据库的验证，尽量放到最后</p>
+<h2 id="数据的操作"><a href="#数据的操作" class="headerlink" title="数据的操作"></a>数据的操作</h2><h3 id="块赋值"><a href="#块赋值" class="headerlink" title="块赋值"></a>块赋值</h3><p>块赋值只用一行代码将用户所有输入填充到一个模型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$user = new User();</span><br><span class="line">$user-&gt;attributes = Yii::$app-&gt;request-&gt;post(&apos;User&apos;, []);</span><br><span class="line"></span><br><span class="line">// 等同于</span><br><span class="line">$user = new User();</span><br><span class="line">$data = Yii::$app-&gt;request-&gt;post(&apos;User&apos;, []);</span><br><span class="line">$user-&gt;username = isset($data[&apos;username&apos;]) ? $data[&apos;username&apos;] : null;</span><br><span class="line">$user-&gt;password = isset($data[&apos;password&apos;]) ? $data[&apos;password&apos;] : null;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>使用load() 方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$user = new User();</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 默认使用Yii 表单</span><br><span class="line"> * 提交的表单数组应该为 </span><br><span class="line"> * 表单元素 &lt;input type=&quot;text&quot; name=&quot;User[username]&quot; /&gt;</span><br><span class="line"> * [</span><br><span class="line"> *      &apos;User&apos; =&gt; [&apos;username&apos; =&gt; &apos;username&apos;, &apos;password&apos; =&gt; &apos;password&apos;]</span><br><span class="line"> * ] </span><br><span class="line"> */ </span><br><span class="line">$user-&gt;load(Yii::$app-&gt;request-&gt;post());</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 没有使用yii表单</span><br><span class="line"> * &lt;input type=&quot;text&quot; name=&quot;username&quot; &gt;</span><br><span class="line"> * 对应提交的值</span><br><span class="line"> * [&apos;username&apos; =&gt; &apos;username&apos;, &apos;password&apos; =&gt; &apos;&apos;]</span><br><span class="line"> */</span><br><span class="line">$user-&gt;load(Yii::$app-&gt;request-&gt;post(), &apos;&apos;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用属性 attributes</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * attributes 需要接收一个数组 </span><br><span class="line"> * [属性字段 =&gt; 对应值]</span><br><span class="line"> */</span><br><span class="line">$user-&gt;attributes = Yii::$app-&gt;request-&gt;post(&apos;User&apos;, []);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 setAttributes() 方法(前面两种最终都是调用的 setAttributes() 方法)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$user = new User();</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 需要接收一个数组</span><br><span class="line"> * [属性字段 =&gt; 对应值]</span><br><span class="line"> */</span><br><span class="line">$user-&gt;setAttributes(Yii::$app-&gt;request-&gt;post());</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="块赋值注意"><a href="#块赋值注意" class="headerlink" title="块赋值注意"></a>块赋值注意</h4><ol>
+<li>需要定义为安全的字段才可以赋值成功</li>
+<li>在没有定义场景的情况下,定义了规则的字段、便会认为是安全的，可以块赋值成功</li>
+<li>定义了验证场景,只有场景定义的字段可以批量赋值</li>
+</ol>
+<h3 id="新增数据"><a href="#新增数据" class="headerlink" title="新增数据"></a>新增数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$user = new User();</span><br><span class="line">$user-&gt;username = &apos;username&apos;;</span><br><span class="line">$user-&gt;password = &apos;password&apos;;</span><br><span class="line">$user-&gt;insert();</span><br><span class="line"></span><br><span class="line">// 或者使用</span><br><span class="line">$user-&gt;save();</span><br></pre></td></tr></table></figure>
+<h3 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h3><ul>
+<li><p>查询对象修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$user = User::findOne(1);</span><br><span class="line">$user-&gt;username = &apos;username&apos;;</span><br><span class="line">$user-&gt;password = &apos;password&apos;;</span><br><span class="line">$user-&gt;update();</span><br><span class="line"></span><br><span class="line">// 或者使用</span><br><span class="line">$user-&gt;save();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改指定数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 将ID 等于 2的用户的状态改为 1, 第二个参数同 where() 方法中的参数</span><br><span class="line">$intNumber = User::updateAll([&apos;status&apos; =&gt; 1], [&apos;id&apos; =&gt; 2]]);</span><br><span class="line"></span><br><span class="line">// 使用字符的绑定参数查询修改</span><br><span class="line">User::updateAll([&apos;status&apos; =&gt; 2], &apos;id=:id&apos;, [&apos;:id&apos; =&gt; 1]);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>属性值实现累加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * updateAllCounters</span><br><span class="line"> * 第一个参数: 字段对应累加 正数值、累减的值 负数值</span><br><span class="line"> * 第二个参数: 查询条件 同where() 方法，可以字符串，数组</span><br><span class="line"> * 第三个参数: 查询绑定的参数</span><br><span class="line"> */</span><br><span class="line">User::updateAllCounters([&apos;status&apos; =&gt; -2], &apos;id=:id&apos;, [&apos;:id&apos; =&gt; 1]);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h3><ul>
+<li><p>使用查询对象删除</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$user = User::findOne(1);</span><br><span class="line">$user-&gt;delete()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除指定数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User::deleteAll([&apos;status&apos; =&gt; 0]);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="AR的生命周期"><a href="#AR的生命周期" class="headerlink" title="AR的生命周期"></a>AR的生命周期</h3><p>AR的生命周期<br>理解AR的生命周期对于你操作数据库非常重要。生命周期通常都会有些典型的事件存在。对于开发AR的behaviors来说非常有用。</p>
+<ul>
+<li>当你实例化一个新的AR对象时，我们将获得如下的生命周期：</li>
+</ul>
+<p>constructor<br>yii\db\ActiveRecord::init(): 会触发一个 yii\db\ActiveRecord::EVENT_INIT 事件</p>
+<ul>
+<li>当你通过 find() 方法查询数据时，每个AR实例都将有以下生命周期：</li>
+</ul>
+<p>constructor</p>
+<ol>
+<li>yii\db\ActiveRecord::init(): 会触发一个 yii\db\ActiveRecord::EVENT_INIT 事件</li>
+<li>yii\db\ActiveRecord::afterFind(): 会触发一个 yii\db\ActiveRecord::EVENT_AFTER_FIND 事件</li>
+</ol>
+<ul>
+<li>当通过 yii\db\ActiveRecord::save() 方法写入或者更新数据时, 我们将获得如下生命周期：</li>
+</ul>
+<ol>
+<li>yii\db\ActiveRecord::beforeValidate(): 会触发一个  yii\db\ActiveRecord::EVENT_BEFORE_VALIDATE 事件</li>
+<li>yii\db\ActiveRecord::afterValidate(): 会触发一个 yii\db\ActiveRecord::EVENT_AFTER_VALIDATE 事件</li>
+<li>yii\db\ActiveRecord::beforeSave(): 会触发一个 yii\db\ActiveRecord::EVENT_BEFORE_INSERT 或 yii\db\ActiveRecord::EVENT_BEFORE_UPDATE 事件</li>
+<li>yii\db\ActiveRecord::afterSave(): 会触发一个 yii\db\ActiveRecord::EVENT_AFTER_INSERT 或 yii\db\ActiveRecord::EVENT_AFTER_UPDATE 事件</li>
+</ol>
+<ul>
+<li>最后，当调用 delete() 删除数据时, 我们将获得如下生命周期：</li>
+</ul>
+<ol>
+<li>yii\db\ActiveRecord::beforeDelete(): 会触发一个 yii\db\ActiveRecord::EVENT_BEFORE_DELETE 事件<br>执行实际的数据删除</li>
+<li>yii\db\ActiveRecord::afterDelete(): 会触发一个 yii\db\ActiveRecord::EVENT_AFTER_DELETE 事件</li>
+</ol>
+<h3 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h3><ul>
+<li>Yii2中文社区 <a href="http://www.yiichina.com/" target="_blank" rel="noopener">http://www.yiichina.com/</a></li>
+<li>深入理解Yii2.0 <a href="http://www.digpage.com/index.html" target="_blank" rel="noopener">http://www.digpage.com/index.html</a></li>
+<li>看云Yii学习<a href="https://www.kancloud.cn/curder/yii/247740" target="_blank" rel="noopener">https://www.kancloud.cn/curder/yii/247740</a></li>
+<li>文档 <a href="http://www.awaimai.com/patterns" target="_blank" rel="noopener">http://www.awaimai.com/patterns</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/php/" rel="tag"># php</a>
+          
+            <a href="/blog/tags/yii2/" rel="tag"># yii2</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2019/05/10/php-mongo/" rel="next" title="PHP操作MongoDB">
+                <i class="fa fa-chevron-left"></i> PHP操作MongoDB
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2019/05/10/php-web-safety/" rel="prev" title="PHP安全Web常见攻击">
+                PHP安全Web常见攻击 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://iocaffcdn.phphub.org/uploads/avatars/20736_1514188903.jpeg!/both/220x220" alt="jinxing.liu@qq.com">
+            
+              <p class="site-author-name" itemprop="name">jinxing.liu@qq.com</p>
+              <div class="site-description motion-element" itemprop="description">刘金星个人博客</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/blog/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/blog/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/myloveGy" title="GitHub &rarr; https://github.com/myloveGy" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:jinxing.liu@qq.com" title="E-Mail &rarr; mailto:jinxing.liu@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#控制器"><span class="nav-number">1.</span> <span class="nav-text">控制器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#控制器周期"><span class="nav-number">1.1.</span> <span class="nav-text">控制器周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#beforeAction"><span class="nav-number">1.1.1.</span> <span class="nav-text">beforeAction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#afterAction"><span class="nav-number">1.1.2.</span> <span class="nav-text">afterAction</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模型"><span class="nav-number">2.</span> <span class="nav-text">模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#AR-模型-常用方法"><span class="nav-number">2.1.</span> <span class="nav-text">AR 模型 常用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查询数据"><span class="nav-number">2.1.1.</span> <span class="nav-text">查询数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询条件的设定"><span class="nav-number">2.1.2.</span> <span class="nav-text">查询条件的设定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#where-查询支持的参数"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">where 查询支持的参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#建议查询时候直接使用where-方法中传递数组的方式定义where条件-andWhere-和-orWhere-会增加判断"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">建议查询时候直接使用where() 方法中传递数组的方式定义where条件; andWhere() 和 orWhere() 会增加判断</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询对象转数组"><span class="nav-number">2.1.3.</span> <span class="nav-text">查询对象转数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指定数组的键"><span class="nav-number">2.1.4.</span> <span class="nav-text">指定数组的键</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用场景"><span class="nav-number">2.1.4.1.</span> <span class="nav-text">使用场景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#批处理查询"><span class="nav-number">2.1.5.</span> <span class="nav-text">批处理查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看执行语句"><span class="nav-number">2.1.6.</span> <span class="nav-text">查看执行语句</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#验证"><span class="nav-number">2.2.</span> <span class="nav-text">验证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#验证规则定义"><span class="nav-number">2.2.1.</span> <span class="nav-text">验证规则定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证规则类型"><span class="nav-number">2.2.2.</span> <span class="nav-text">验证规则类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义验证规则"><span class="nav-number">2.2.3.</span> <span class="nav-text">自定义验证规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证规则生效条件"><span class="nav-number">2.2.4.</span> <span class="nav-text">验证规则生效条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证场景"><span class="nav-number">2.2.5.</span> <span class="nav-text">验证场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义验证场景"><span class="nav-number">2.2.5.1.</span> <span class="nav-text">定义验证场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为规则指定验证场景"><span class="nav-number">2.2.5.2.</span> <span class="nav-text">为规则指定验证场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用验证场景"><span class="nav-number">2.2.5.3.</span> <span class="nav-text">使用验证场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#验证规则使用注意"><span class="nav-number">2.2.5.4.</span> <span class="nav-text">验证规则使用注意</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据的操作"><span class="nav-number">2.3.</span> <span class="nav-text">数据的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#块赋值"><span class="nav-number">2.3.1.</span> <span class="nav-text">块赋值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#块赋值注意"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">块赋值注意</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增数据"><span class="nav-number">2.3.2.</span> <span class="nav-text">新增数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改数据"><span class="nav-number">2.3.3.</span> <span class="nav-text">修改数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除数据"><span class="nav-number">2.3.4.</span> <span class="nav-text">删除数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AR的生命周期"><span class="nav-number">2.3.5.</span> <span class="nav-text">AR的生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文档"><span class="nav-number">2.3.6.</span> <span class="nav-text">参考文档</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jinxing.liu@qq.com</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.1</div>
+
+
+
+
+
+<div>
+  <div class="theme-info">
+    优秀博客：
+      <a href="http://blog.fifsky.com/" rel="noopener" target="_blank">fifsky的技术笔记</a>
+    <span class="post-meta-divider">|</span>
+    <a href="http://www.littlebug.vip/" rel="noopener" target="_blank">littlebug</a>
+  </div>
+</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/blog/js/utils.js?v=7.1.1"></script>
+
+  <script src="/blog/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/blog/js/affix.js?v=7.1.1"></script>
+
+  <script src="/blog/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+  
+  <script src="/blog/js/scrollspy.js?v=7.1.1"></script>
+<script src="/blog/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/blog/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/blog/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon.ico?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/blog/images/favicon.ico?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Pisces',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="目录 PHP基础数据类型 PHP预定义变量 PHP魔术函数 PHP魔术常量 COOKE和SESSION PHP设计模式 PHP实现排序算法 PHP编码规范PSR  基础数据类型  ● 四种标量类型  Boolean     布尔类型;判断方法 is_bool(); 类型强转(bool),(boolean) Integer     整型;判断方法is_integer();类型强转(int),(int">
+<meta name="keywords" content="php">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP面试-基础二">
+<meta property="og:url" content="https://mylovegy.github.io/blog/2019/05/09/php-basis2/index.html">
+<meta property="og:site_name" content="刘金星个人博客">
+<meta property="og:description" content="目录 PHP基础数据类型 PHP预定义变量 PHP魔术函数 PHP魔术常量 COOKE和SESSION PHP设计模式 PHP实现排序算法 PHP编码规范PSR  基础数据类型  ● 四种标量类型  Boolean     布尔类型;判断方法 is_bool(); 类型强转(bool),(boolean) Integer     整型;判断方法is_integer();类型强转(int),(int">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-13T14:16:31.962Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP面试-基础二">
+<meta name="twitter:description" content="目录 PHP基础数据类型 PHP预定义变量 PHP魔术函数 PHP魔术常量 COOKE和SESSION PHP设计模式 PHP实现排序算法 PHP编码规范PSR  基础数据类型  ● 四种标量类型  Boolean     布尔类型;判断方法 is_bool(); 类型强转(bool),(boolean) Integer     整型;判断方法is_integer();类型强转(int),(int">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://mylovegy.github.io/blog/2019/05/09/php-basis2/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>PHP面试-基础二 | 刘金星个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">刘金星个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">个人博客</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <a href="https://github.com/myloveGy" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://mylovegy.github.io/blog/blog/2019/05/09/php-basis2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jinxing.liu@qq.com">
+      <meta itemprop="description" content="刘金星个人博客">
+      <meta itemprop="image" content="https://iocaffcdn.phphub.org/uploads/avatars/20736_1514188903.jpeg!/both/220x220">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刘金星个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PHP面试-基础二
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-09 18:32:26" itemprop="dateCreated datePublished" datetime="2019-05-09T18:32:26+08:00">2019-05-09</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-13 22:16:31" itemprop="dateModified" datetime="2019-05-13T22:16:31+08:00">2019-05-13</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#基础数据类型">PHP基础数据类型</a></li>
+<li><a href="#预定义变量">PHP预定义变量</a></li>
+<li><a href="#魔术函数">PHP魔术函数</a></li>
+<li><a href="#魔术常量">PHP魔术常量</a></li>
+<li><a href="#魔术常量">COOKE和SESSION</a></li>
+<li><a href="#设计模式">PHP设计模式</a></li>
+<li><a href="#排序算法">PHP实现排序算法</a></li>
+<li><a href="https://psr.phphub.org/" target="_blank" rel="noopener">PHP编码规范PSR</a></li>
+</ol>
+<h1 id="基础数据类型"><a href="#基础数据类型" class="headerlink" title="基础数据类型"></a>基础数据类型</h1><p>  ● 四种标量类型</p>
+<ol>
+<li><a href="https://secure.php.net/manual/zh/language.types.boolean.php" target="_blank" rel="noopener">Boolean</a>     布尔类型;判断方法 is_bool(); 类型强转(bool),(boolean)</li>
+<li><a href="https://secure.php.net/manual/zh/language.types.integer.php" target="_blank" rel="noopener">Integer</a>     整型;判断方法is_integer();类型强转(int),(integer)</li>
+<li><a href="https://secure.php.net/manual/zh/language.types.float.php" target="_blank" rel="noopener">Float</a>         浮点型，也称作 Double；判断方法is_float();类型强转(float),(double),(real)</li>
+<li><p><a href="https://secure.php.net/manual/zh/language.types.string.php" target="_blank" rel="noopener">String</a>         字符型；判断方法is_string();类型强转(string)</p>
+<p>● 两种复合类型</p>
+</li>
+<li><a href="https://secure.php.net/manual/zh/language.types.array.php" target="_blank" rel="noopener">Array</a>         数组;判断方法is_array();类型强转(array)</li>
+<li><a href="https://secure.php.net/manual/zh/language.types.object.php" target="_blank" rel="noopener">Object</a>        对象    ;判断方法is_object();类型强转(object)</li>
+</ol>
+<p>● 两种特殊类型</p>
+<ol>
+<li><a href="https://secure.php.net/manual/zh/language.types.resource.php" target="_blank" rel="noopener">Resource</a>     资源;判断方法is_resource()</li>
+<li><a href="https://secure.php.net/manual/zh/language.types.null.php" target="_blank" rel="noopener">NULL</a>         NULL;判断方法 is_null();类型强转(unset)</li>
+</ol>
+<p>● 伪类型</p>
+<p>   伪类型（pseudo-types） 是 PHP 文档里用于指示参数可以使用的类型和值。 请注意，它们不是 PHP 语言里原生类型。 所以不能把伪类型用于自定义函数里的类型约束（typehint）。</p>
+<ol>
+<li><a href="https://secure.php.net/manual/zh/language.pseudo-types.php#language.types.mixed" target="_blank" rel="noopener">mixed</a></li>
+<li><a href="https://secure.php.net/manual/zh/language.pseudo-types.php#language.types.number" target="_blank" rel="noopener">number</a></li>
+<li><a href="https://secure.php.net/manual/zh/language.pseudo-types.php#language.types.callback" target="_blank" rel="noopener">callback</a></li>
+</ol>
+<ul>
+<li>补充说明：</li>
+</ul>
+<ol>
+<li>通过gettype()获取变量的类型字符串</li>
+<li><p>字符串单引号和双引号的区别</p>
+<ul>
+<li>转义字符不同     </li>
+<li>对变量的解析不同(双引号解析变量)</li>
+<li>解析速度不同(单引号快)</li>
+</ul>
+</li>
+</ol>
+<h1 id="预定义变量"><a href="#预定义变量" class="headerlink" title="预定义变量"></a>预定义变量</h1><ul>
+<li><a href="https://secure.php.net/manual/zh/reserved.variables.globals.php" target="_blank" rel="noopener">$GLOBALS</a>  引用全局作用域中可用的全部变量</li>
+<li><a href="https://secure.php.net/manual/zh/reserved.variables.server.php" target="_blank" rel="noopener">$_SERVER</a>  这种超全局变量保存关于报头、路径和脚本位置的信息。</li>
+<li><a href="https://secure.php.net/manual/zh/reserved.variables.request.php" target="_blank" rel="noopener">$_REQUEST</a>     HTTP Request 变量(默认情况下包含了 $_GET，$_POST 和 $_COOKIE 的数组。)</li>
+<li><a href="https://secure.php.net/manual/zh/reserved.variables.get.php" target="_blank" rel="noopener">$_GET</a>     通过 URL 参数传递给当前脚本的变量的数组。 </li>
+<li><a href="https://secure.php.net/manual/zh/reserved.variables.post.php" target="_blank" rel="noopener">$_POST</a>    当 HTTP POST 请求的 Content-Type 是 application/x-www-form-urlencoded 或 multipart/form-data 时，会将变量以关联数组形式传入当前脚本</li>
+<li><a href="https://secure.php.net/manual/zh/reserved.variables.files.php" target="_blank" rel="noopener">$_FILES</a>       通过 HTTP POST 方式上传到当前脚本的项目的数组</li>
+<li><a href="https://secure.php.net/manual/zh/reserved.variables.environment.php" target="_blank" rel="noopener">$_ENV</a>         通过环境方式传递给当前脚本的变量的数组。</li>
+<li><a href="https://secure.php.net/manual/zh/reserved.variables.cookies.php" target="_blank" rel="noopener">$_COOKIE</a>      通过 HTTP Cookies 方式传递给当前脚本的变量的数组。</li>
+<li><a href="https://secure.php.net/manual/zh/reserved.variables.session.php" target="_blank" rel="noopener">$_SESSION</a>     当前脚本可用 SESSION 变量的数组。</li>
+<li>补充说明$_GET和$_POST区别</li>
+</ul>
+<ol>
+<li>GET使用URL或Cookie传参。而POST将数据放在BODY中。</li>
+<li>GET的URL会有长度上的限制，则POST的数据则可以非常大。</li>
+<li>POST比GET安全，因为数据在地址栏上不可见。</li>
+</ol>
+<h1 id="魔术函数"><a href="#魔术函数" class="headerlink" title="魔术函数"></a>魔术函数</h1><ul>
+<li><p><a href="https://secure.php.net/manual/zh/language.oop5.decon.php#object.construct" target="_blank" rel="noopener">__construct()</a> </p>
+<p>  PHP 5 允行开发者在一个类中定义一个方法作为构造函数。具有构造函数的类会在每次创建新对象时先调用此方法，所以非常适合在使用对象之前做一些初始化工作。</p>
+</li>
+<li><p><a href="https://secure.php.net/manual/zh/language.oop5.decon.php#object.destruct" target="_blank" rel="noopener">__destruct()</a></p>
+<p>  PHP 5 引入了析构函数的概念，这类似于其它面向对象的语言，如 C++。析构函数会在到某个对象的所有引用都被删除或者当对象被显式销毁时执行。</p>
+</li>
+<li><p><a href="https://secure.php.net/manual/zh/language.oop5.overloading.php#object.call" target="_blank" rel="noopener">__call()</a></p>
+<p>  在对象中调用一个不可访问方法时，__call() 会被调用。</p>
+</li>
+<li><p><a href="https://secure.php.net/manual/zh/language.oop5.overloading.php#object.callstatic" target="_blank" rel="noopener">__callStatic()</a></p>
+<p>  在静态上下文中调用一个不可访问方法时，__callStatic() 会被调用。</p>
+</li>
+<li><p><a href="https://secure.php.net/manual/zh/language.oop5.overloading.php#object.get" target="_blank" rel="noopener">__get()</a></p>
+<p>  读取不可访问属性的值时，__get() 会被调用。</p>
+</li>
+<li><p><a href="https://secure.php.net/manual/zh/language.oop5.overloading.php#object.set" target="_blank" rel="noopener">__set()</a> </p>
+<p>  在给不可访问属性赋值时，__set() 会被调用。</p>
+</li>
+<li><p><a href="https://secure.php.net/manual/zh/language.oop5.overloading.php#object.isset" target="_blank" rel="noopener">__isset()</a></p>
+<p>  当对不可访问属性调用 isset() 或 empty() 时，__isset() 会被调用</p>
+</li>
+<li><p><a href="https://secure.php.net/manual/zh/language.oop5.overloading.php#object.unset" target="_blank" rel="noopener">__unset()</a></p>
+<p>  当对不可访问属性调用 unset() 时，__unset() 会被调用。</p>
+</li>
+<li><p><a href="https://secure.php.net/manual/zh/language.oop5.magic.php#object.sleep" target="_blank" rel="noopener">__sleep()</a></p>
+<p>  serialize() 函数会检查类中是否存在一个魔术方法 __sleep()。如果存在，该方法会先被调用，然后才执行序列化操作。</p>
+</li>
+<li><p><a href="https://secure.php.net/manual/zh/language.oop5.magic.php#object.wakeup" target="_blank" rel="noopener">__wakeup()</a></p>
+<p>  与之相反，unserialize() 会检查是否存在一个 <strong>wakeup() 方法。如果存在，则会先调用 </strong>wakeup 方法，预先准备对象需要的资源。</p>
+</li>
+<li><p><a href="https://secure.php.net/manual/zh/language.oop5.magic.php#object.tostring" target="_blank" rel="noopener">__toString()</a></p>
+<p>  __toString() 方法用于一个类被当成字符串时应怎样回应。</p>
+</li>
+<li><p><a href="https://secure.php.net/manual/zh/language.oop5.magic.php#object.invoke" target="_blank" rel="noopener">__invoke()</a></p>
+<p>  当尝试以调用函数的方式调用一个对象时，__invoke() 方法会被自动调用。</p>
+</li>
+<li><p><a href="https://secure.php.net/manual/zh/language.oop5.magic.php#object.set-state" target="_blank" rel="noopener">__set_state()</a></p>
+<p>  PHP 5.1.0 起当调用 var_export() 导出类时，此静态 方法会被调用。</p>
+</li>
+<li><p><a href="https://secure.php.net/manual/zh/language.oop5.cloning.php#object.clone" target="_blank" rel="noopener">__clone()</a></p>
+<p>  当复制完成时，如果定义了 <strong>clone() 方法，则新创建的对象（复制生成的对象）中的 </strong>clone() 方法会被调用，可用于修改属性的值（如果有必要的话）。    </p>
+</li>
+<li><p><a href="https://secure.php.net/manual/zh/language.oop5.magic.php#object.debuginfo" target="_blank" rel="noopener">__debugInfo()</a></p>
+<p>  当转储对象以获取应显示的属性时，此方法由var_dump（）调用。 如果方法未在对象上定义，那么将显示所有public，protected和private属性。</p>
+</li>
+<li><p><a href="https://secure.php.net/manual/zh/function.autoload.php" target="_blank" rel="noopener">__autoload</a></p>
+<p>  尝试加载未定义的类(该方法在PHP7.2中已经删除)</p>
+</li>
+</ul>
+<h1 id="魔术常量"><a href="#魔术常量" class="headerlink" title="魔术常量"></a>魔术常量</h1><ul>
+<li><a href="#魔术常量">__LINE__</a> 当前文件中的行号</li>
+<li><a href="#魔术常量">__FILE__</a> 返回文件的完整路径和文件名。如果用在包含文件中，则返回包含文件名。自 PHP 4.0.2 起，<strong>FILE</strong> 总是包含一个绝对路径，而在此之前的版本有时会包含一个相对路径。</li>
+<li><a href="#魔术常量">__FUNCTION__</a> 返回文件的完整路径和文件名。如果用在包含文件中，则返回包含文件名。自 PHP 4.0.2 起，<strong>FILE</strong> 总是包含一个绝对路径，而在此之前的版本有时会包含一个相对路径。</li>
+<li><a href="#魔术常量">__CLASS__</a> 返回类的名称（PHP 4.3.0 新加）。自 PHP 5 起本常量返回该类被定义时的名字（区分大小写）。在 PHP 4 中该值总是小写字母的。</li>
+<li><a href="#魔术常量">__METHOD__</a> 返回类的方法名（PHP 5.0.0 新加）。返回该方法被定义时的名字（区分大小写）</li>
+</ul>
+<h1 id="COOKE和SESSION"><a href="#COOKE和SESSION" class="headerlink" title="COOKE和SESSION"></a>COOKE和SESSION</h1><h4 id="COOKIE"><a href="#COOKIE" class="headerlink" title="COOKIE"></a>COOKIE</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 设置cookie</span><br><span class="line"> * @param string $name  cookie 名称</span><br><span class="line"> * @param string $value  cookie 值</span><br><span class="line"> * @param int      $expire cookie 保存时间</span><br><span class="line"> * @param string $path  cookie 有效目录</span><br><span class="line"> * @param string $domain cookie 保存域名</span><br><span class="line"> * @param bool   $secure   cookie  是否通过HTTPS协议传输</span><br><span class="line"> * @param bool   $httponly cookie 不允许客户端修改</span><br><span class="line"> */</span><br><span class="line">bool setcookie(string $name[, string $value = &apos;&apos;[, int $expire = 0[, string $path = &apos;&apos; [, string $domain = &apos;&apos; [, bool $secure = false[, bool $httponly = false ]]]]]])</span><br></pre></td></tr></table></figure>
+<h4 id="SESSION"><a href="#SESSION" class="headerlink" title="SESSION"></a>SESSION</h4><ul>
+<li><p>设置相关<br>1) session.save_handler = file<br>   用于读取/回写session数据的方式，默认是files<br>2) session.save_path = “/var/lib/php/session”<br>   指定保存session文件的目录，可以指定到别的目录，但是指定目录必须要有httpd守护进程属主(比如apache或www等)写权限，否则无法回存session数据<br>3) session.auto_start = 0<br>   如果启用该选项，用户的每次请求都会初始化session。我们推荐不启用该设置，最好通过session_start()显示地初始化session</p>
+</li>
+<li><p>相关函数</p>
+</li>
+</ul>
+<p>session_start:                          初始 session。</p>
+<p>session_destroy:                     结束 session。</p>
+<p>session_unset:                        释放session内存。</p>
+<p>session_name:                        存取目前 session 名称。</p>
+<p>session_module_name:           存取目前 session 模块。</p>
+<p>session_save_path:                 存取目前 session 路径。</p>
+<p>session_id:                              存取目前 session 代号。</p>
+<p>session_register:                     注册新的变量。</p>
+<p>session_unregister:                 删除已注册变量。</p>
+<p>session_is_registered:             检查变量是否注册。</p>
+<p>session_decode:                     Session 资料解码。</p>
+<p>session_encode:                     Session 资料编码。</p>
+<ol>
+<li>session_start()<br>  函数session_start会初始化session，也标识着session生命周期的开始。要使用session，必须初始化一个session环境。有点类似于OOP概念中调用构造函数构创建对象实例一样。<br>session初始化操作，声明一个全局数组$_SESSION，映射寄存在内存的session数据。如果session文件已经存在，并且保存有session数据，session_start()则会读取session数据，填入$_SESSION中，开始一个新的session生命周期</li>
+<li>$_SESSION<br>  它是一个全局变量，类型是Array,映射了session生命周期的session数据，寄存在内存中。在session初始化的时候，从session文件中读取数据，填入该变量中。在session生命周期结束时，将$_SESSION数据写回session文件。</li>
+<li>session_register()<br>  在session生命周期内，使用全局变量名称将注全局变量注册到当前session中。所谓注册，就是将变量填入$_SESSION中，值为NULL。它不会对session文件进行任何IO操作，只是影响$_SESSION变量。注意，它的正确写法是session_register(‘varname’)，而不是session_register($varname)</li>
+<li>session_unregister()<br>  与session_register操作正好相反，即在session生命周期,从当前session注销指定变量。同样只影响$_SESSION，并不进行任何IO操作</li>
+<li>session_unset()<br>  在session生命周期，从当前session中注销全部session数据，让$_SESSION成为一个空数组。它与unset($_SESSION)的区别在于:unset直接删除$_SESSION变量，释放内存资源;另一个区别在于，session_unset()仅在session生命周期能够操作$_SESSION数组，而unset()则在整个页面(page)生命周期都能操作$_SESSION数组。session_unset()同样不进行任何IO操作，只影响$_SESSION数组</li>
+<li>session_destroy()<br>   如果说session_start()初始化一个session的话，而它则注销一个session。意味着session生命周期结束了。在session生命周期结整后，session_register, session_unset, session_register都将不能操作$_SESSION数组，而$_SESSION数组依然可以被unset()等函数操作。这时，session意味着是未定义的，而$_SESSION依然是一个全局变量，他们脱离了关映射关系。 通过session_destroy()注销session,除了结束session生命周期外，它还会删除sesion文件，但不会影响当前$_SESSION变量。即它会产生一个IO操作</li>
+<li>session_regenerate_id()<br>  调用它，会给当前用户重新分配一个新的session id。并且在结束当前页面生命周期的时候，将当前session数据写入session文件。前提是，调用此函数之前，当前session生命周期没有被终止（参考第9点）。它会产生一个IO操作，创建一个新的session文件，创建新的session文件的是在session结束之前，而不是调用此函数就立即创建新的session文件。</li>
+<li>session_commit()<br>  session_commit()函数是session_write_close()函数的别名。它会结束当前session的生命周期，并且将session数据立即强制写入session文件。不推荐通过session_commit()来手工写入session数据，因为PHP会在页面生命周期结束的时候，自动结束当前没有终止的session生命周期。它会产生一个IO写操作</li>
+<li>session_end()<br>  结束session，默认是在页面生命周期结束的之前，PHP会自动结束当前没有终止的session。但是还可以通过session_commit()与session_destroy()二个函数提前结束session。不管是哪种方式，结束session都会产生IO操作，分别不一样。默认情况，产生一个IO写操作，将当前session数据写回session文件。session_commit()则是调用该函数那刻，产生一个IO写操作，将session数据写回session文件。而session_destroy()不一样在于，它不会将数据写回session文件，而是直接删除当前session文件。有趣的是，不管是session_commit()，还是session_destroy()都不会清空$_SESSION数组，更不会删除$<em>SESSION数组，只是所有session</em>*函数不能再操作session数据，因为当前的session生命周期终止了，即不能操作一个未定义对象。</li>
+</ol>
+<h1 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h1><ul>
+<li>一、单例设计模式</li>
+</ul>
+<p>单例模式的要点有三个：</p>
+<ol>
+<li><p>一是某个类只能有一个实例</p>
+</li>
+<li><p>二是它必须自行创建这个实例</p>
+</li>
+<li><p>三是它必须自行向整个系统提供这个实例</p>
+</li>
+</ol>
+<p>为什么要使用PHP单例模式</p>
+<p>php的应用主要在于数据库应用, 一个应用中会存在大量的数据库操作, 在使用面向对象的方式开发时, 如果使用单例模式, 则可以避免大量的new 操作消耗的资源,还可以减少数据库连接这样就不容易出现 too many connections情况。</p>
+<p>一个类来全局控制某些配置信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">namespace lib\mode;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Class Man</span><br><span class="line"> * @package lib\mode</span><br><span class="line"> * @desc 设计模式单例模式</span><br><span class="line"> * 1 私有化构造函数和克隆函数</span><br><span class="line"> * 2 提供方法实例化对象</span><br><span class="line"> */</span><br><span class="line">class Man</span><br><span class="line">&#123;</span><br><span class="line">    // 保存实例化对象属性</span><br><span class="line">    private static $instance;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * Man constructor.</span><br><span class="line">     * @desc 私有化构造函数</span><br><span class="line">     */</span><br><span class="line">    private function __construct()</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * __clone() 私有化克隆函数</span><br><span class="line">     */</span><br><span class="line">    private function __clone()</span><br><span class="line">    &#123;</span><br><span class="line">        return self::$instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * getInstance() 提供公共方法获取对象</span><br><span class="line">     * @return Man</span><br><span class="line">     */</span><br><span class="line">    public static function getInstance()</span><br><span class="line">    &#123;</span><br><span class="line">        if (!self::$instance) &#123;</span><br><span class="line">            self::$instance = new self();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return self::$instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 其他方法</span><br><span class="line">     */</span><br><span class="line">    public function test()</span><br><span class="line">    &#123;</span><br><span class="line">        echo &apos;单例设计模式&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>二、简单工厂模式</li>
+</ul>
+<ol>
+<li>抽象基类：类中定义抽象一些方法，用以在子类中实现</li>
+<li><p>继承自抽象基类的子类：实现基类中的抽象方法</p>
+<ul>
+<li>工厂类：用以实例化所有相对应的子类</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">namespace lib\mode;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Class Factory</span><br><span class="line"> * @package lib\mode</span><br><span class="line"> * @desc 设计模式 简单工厂模式</span><br><span class="line"> * 1、提供一个工厂类，生产出指定类</span><br><span class="line"> * 2、提供一个抽象类，设计出需要抽象的方法，让子类实现</span><br><span class="line"> * 3、子类实现抽象基类</span><br><span class="line"> */</span><br><span class="line">class Factory</span><br><span class="line">&#123;</span><br><span class="line">    /**</span><br><span class="line">     * createObject() 工厂提供创建对象方法</span><br><span class="line">     * @param  string      $name    需要创建的类名</span><br><span class="line">     * @param  mixed|null  $config  配置信息</span><br><span class="line">     * @return bool</span><br><span class="line">     */</span><br><span class="line">    public static function createObject($name, $config = null)</span><br><span class="line">    &#123;</span><br><span class="line">        $mixReturn = false;</span><br><span class="line">        if ($name) &#123;</span><br><span class="line">            $name = &apos;\\lib\\mode\\&apos;.$name;</span><br><span class="line">            if(class_exists($name)) &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                  $mixReturn = new $name($config);</span><br><span class="line">                &#125; catch (\Exception $e) &#123;</span><br><span class="line">                    $mixReturn = false;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return $mixReturn;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Class Operation</span><br><span class="line"> * @package lib\mode</span><br><span class="line"> * @desc 抽象基类， 提供抽象方法</span><br><span class="line"> */</span><br><span class="line">abstract class Operation</span><br><span class="line">&#123;</span><br><span class="line">    /**</span><br><span class="line">     * getValue() 提供抽象方法，计算两个值的操作后的值</span><br><span class="line">     * @param $value1</span><br><span class="line">     * @param $value2</span><br><span class="line">     * @return mixed</span><br><span class="line">     */</span><br><span class="line">    abstract public function getValue($value1, $value2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Class Add</span><br><span class="line"> * @package lib\mode</span><br><span class="line"> * @desc 加法类</span><br><span class="line"> */</span><br><span class="line">class Add extends Operation</span><br><span class="line">&#123;</span><br><span class="line">    public function getValue($value1, $value2)</span><br><span class="line">    &#123;</span><br><span class="line">        return $value1 + $value2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Class Subtract</span><br><span class="line"> * @package lib\mode</span><br><span class="line"> * @desc 减法类</span><br><span class="line"> */</span><br><span class="line">class Subtract extends Operation</span><br><span class="line">&#123;</span><br><span class="line">    public function getValue($value1, $value2)</span><br><span class="line">    &#123;</span><br><span class="line">        return $value1 - $value2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 使用 加法类</span><br><span class="line">$obj = Factory::createObject(&apos;Add&apos;);</span><br><span class="line">var_dump($obj-&gt;getValue(8, 13));</span><br><span class="line"></span><br><span class="line">// 使用 减法类</span><br><span class="line">$obj = Factory::createObject(&apos;Subtract&apos;);</span><br><span class="line">var_dump($obj-&gt;getValue(8, 13));</span><br></pre></td></tr></table></figure>
+<ul>
+<li>三、观察者模式<pre><code>定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新【GOF95】 又称为发布-订阅（Publish-Subscribe）模式、模型-视图（Model-View）模式、源-监听（Source-Listener）模式、或从属者(Dependents)模式
+</code></pre></li>
+</ul>
+<ol>
+<li><p>抽象主题（Subject）角色：主题角色将所有对观察者对象的引用保存在一个集合中，每个主题可以有任意多个观察者。 抽象主题提供了增加和删除观察者对象的接口。</p>
+</li>
+<li><p>抽象观察者（Observer）角色：为所有的具体观察者定义一个接口，在观察的主题发生改变时更新自己。</p>
+</li>
+<li><p>具体主题（ConcreteSubject）角色：存储相关状态到具体观察者对象，当具体主题的内部状态改变时，给所有登记过的观察者发出通知。具体主题角色通常用一个具体子类实现。</p>
+</li>
+<li><p>具体观察者（ConcretedObserver）角色：存储一个具体主题对象，存储相关状态，实现抽象观察者角色所要求的更新接口，以使得其自身状态和主题的状态保持一致</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">namespace lib\mode;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Class Observe</span><br><span class="line"> * @package lib\mode</span><br><span class="line"> * @desc 设计模式 观察者模式</span><br><span class="line"> * 1、监听器</span><br><span class="line"> * 2、被观察者</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Class Subject</span><br><span class="line"> * @package lib\mode</span><br><span class="line"> * @desc 抽象主题角色</span><br><span class="line"> */</span><br><span class="line">class Subject implements \SplSubject</span><br><span class="line">&#123;</span><br><span class="line">    private $observers;</span><br><span class="line">    private $name;</span><br><span class="line"></span><br><span class="line">    public function __construct($name)</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;observers = new \SplObjectStorage();</span><br><span class="line">        $this-&gt;name = $name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * attach() 添加一个新的观察者对象</span><br><span class="line">     * @param \SplObserver $observer</span><br><span class="line">     */</span><br><span class="line">    public function attach(\SplObserver $observer)</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;observers-&gt;attach($observer);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * detach() 删除一个已经注册过的观察者</span><br><span class="line">     * @param \SplObserver $observer</span><br><span class="line">     */</span><br><span class="line">    public function detach(\SplObserver $observer)</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;observers-&gt;detach($observer);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function notify()</span><br><span class="line">    &#123;</span><br><span class="line">        foreach ($this-&gt;observers as $observer) &#123;</span><br><span class="line">            $observer-&gt;update($this);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function getName()</span><br><span class="line">    &#123;</span><br><span class="line">        return $this-&gt;name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Class Observe</span><br><span class="line"> * @package lib\mode</span><br><span class="line"> * @desc 观察者角色信息类</span><br><span class="line"> */</span><br><span class="line">class Observe implements \SplObserver</span><br><span class="line">&#123;</span><br><span class="line">    public function update(\SplSubject $subject)</span><br><span class="line">    &#123;</span><br><span class="line">        var_dump(__CLASS__. &apos;-&apos; . $subject-&gt;getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Class Observe</span><br><span class="line"> * @package lib\mode</span><br><span class="line"> * @desc 观察者角色信息类1</span><br><span class="line"> */</span><br><span class="line">class Observe1 implements \SplObserver</span><br><span class="line">&#123;</span><br><span class="line">    public function update(\SplSubject $subject)</span><br><span class="line">    &#123;</span><br><span class="line">        var_dump(__CLASS__. &apos;-&apos; . $subject-&gt;getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 使用说明</span><br><span class="line">$observer1 = new Observe();</span><br><span class="line">$observer2 = new Observe1();</span><br><span class="line">$subject = new Subject(&quot;test&quot;);</span><br><span class="line"></span><br><span class="line">$subject-&gt;attach($observer1);</span><br><span class="line">$subject-&gt;attach($observer2);</span><br><span class="line"></span><br><span class="line">$subject-&gt;notify();</span><br></pre></td></tr></table></figure>
+<h1 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h1><ul>
+<li><p>冒泡排序</p>
+<p>  思路分析：在要排序的一组数中，对当前还未排好的序列，从前往后对相邻的两个数依次进行比较和调整，让较大的数往下沉，较小的往上冒。即，每当两相邻的数比较后发现它们的排序与排序要求相反时，就将它们互换。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 冒泡排序</span><br><span class="line"> * @param array $array</span><br><span class="line"> * @return array</span><br><span class="line"> */</span><br><span class="line">function bubbleSort($array)</span><br><span class="line">&#123;</span><br><span class="line">    $length = count($array);</span><br><span class="line">    if ($length &gt; 1) &#123;</span><br><span class="line">        for ($i = 0; $i &lt; $length; $i++) &#123;</span><br><span class="line">            for ($x = 0; $x &lt; ($length - $i - 1); $x++) &#123;</span><br><span class="line">                if ($array[$x] &gt; $array[$x + 1]) &#123;</span><br><span class="line">                    $tmp = $array[$x + 1];</span><br><span class="line">                    $array[$x + 1] = $array[$x];</span><br><span class="line">                    $array[$x] = $tmp;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return $array;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>快速排序</p>
+<p>  找到当前数组中的任意一个元素（一般选择第一个元素），作为标准，新建两个空数组，遍历整个数组元素，<br>如果遍历到的元素比当前的元素要小，那么就放到左边的数组，否则放到右面的数组，然后再对新数组进行同样的操作，<br>不难发现，这里符合递归的原理，所以我们可以用递归来实现。</p>
+</li>
+</ul>
+<p>使用递归，则需要找到递归点和递归出口：<br>递归点：如果数组的元素大于1，就需要再进行分解，所以我们的递归点就是新构造的数组元素个数大于1</p>
+<p>递归出口：我们什么时候不需要再对新数组不进行排序了呢？就是当数组元素个数变成1的时候，所以这就是我们的出口。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 快速排序</span><br><span class="line"> * @param array $array</span><br><span class="line"> * @return array</span><br><span class="line"> */</span><br><span class="line">function quickSort(array $array)</span><br><span class="line">&#123;</span><br><span class="line">    if ($array &amp;&amp; is_array($array)) &#123;</span><br><span class="line">        $length = count($array);</span><br><span class="line">        if ($length &gt; 1) &#123;</span><br><span class="line">            $left = $right = [];</span><br><span class="line">            for ($i = 1; $i &lt; $length; $i ++) &#123;</span><br><span class="line">                // 判断当前元素的大小和第一个元素比较</span><br><span class="line">                if ($array[$i] &lt; $array[0]) &#123;</span><br><span class="line">                    $left[] = $array[$i];</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    $right[] = $array[$i];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            // 递归调用</span><br><span class="line">            if ($left) &#123;</span><br><span class="line">                $left = quickSort($left);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if ($right) &#123;</span><br><span class="line">                $right = quickSort($right);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            return array_merge($left, [$array[0]], $right);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return $array;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>选择排序</p>
+<p>  思路分析：在要排序的一组数中，选出最小的一个数与第一个位置的数交换。然后在剩下的数当中再找最小的与第二个位置的数交换，如此循环到倒数第二个数和最后一个数比较为止。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 选择排序</span><br><span class="line"> * 在要排序的一组数中，选出最小的一个数与第一个位置的数交换。然后在剩下的数当中再找最小的与第二个位置的数交换，如此循环到倒数第二个数和最后一个数比较为止。</span><br><span class="line"> * @param array $array</span><br><span class="line"> * @return array</span><br><span class="line"> */</span><br><span class="line">function selectSort(array $array)</span><br><span class="line">&#123;</span><br><span class="line">    $length = count($array);</span><br><span class="line">    if ($length &gt; 1) &#123;</span><br><span class="line"></span><br><span class="line">        for ($i = 0; $i &lt; $length - 1; $i ++) &#123;</span><br><span class="line">            $index = $i;</span><br><span class="line">            for ($x = $i + 1; $x &lt; $length; $x ++) &#123;</span><br><span class="line">                // 默认$array[$index] 为最小值</span><br><span class="line">                if ($array[$index] &gt; $array[$x]) &#123;</span><br><span class="line">                    // 记录最小值</span><br><span class="line">                    $index = $x;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            // 已经确定最小值的位置，保持到$index中;如果发现最小值的位置与当前假设的位置$i不同，则位置互换即可。</span><br><span class="line">            if ($index != $i) &#123;</span><br><span class="line">                $tmp = $array[$index];</span><br><span class="line">                $array[$index] = $array[$i];</span><br><span class="line">                $array[$i] = $tmp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return $array;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>插入排序</p>
+<p>  在要排序的一组数中，假设前面的数已经是排好顺序的，现在要把第n个数插到前面的有序数中，使得这n个数也是排好顺序的。如此反复循环，直到全部排好顺序。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 插入排序</span><br><span class="line"> * 在要排序的一组数中，假设前面的数已经是排好顺序的，现在要把第n个数插到前面的有序数中，使得这n个数也是排好顺序的。如此反复循环，直到全部排好顺序。</span><br><span class="line"> * @param array $array</span><br><span class="line"> * @return array</span><br><span class="line"> */</span><br><span class="line">function insertSort(array $array)</span><br><span class="line">&#123;</span><br><span class="line">    $length = count($array);</span><br><span class="line">    if ($length &gt; 0) &#123;</span><br><span class="line">        for ($i = 1; $i &lt; $length; $i ++) &#123;</span><br><span class="line">            $tmp = $array[$i];</span><br><span class="line"></span><br><span class="line">            // 内层循环，比较插入</span><br><span class="line">            for ($x = $i - 1; $x &gt;= 0; $x --) &#123;</span><br><span class="line">                if ($tmp &lt; $array[$x]) &#123;</span><br><span class="line">                    // 发现插入的元素要小，交换位置，将后边的元素与前面的元素互换</span><br><span class="line">                    $array[$x + 1] = $array[$x];</span><br><span class="line">                    $array[$x] = $tmp;</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return $array;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/php/" rel="tag"># php</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2019/05/09/php-basis/" rel="next" title="PHP面试-基础一">
+                <i class="fa fa-chevron-left"></i> PHP面试-基础一
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2019/05/09/php-concurrent/" rel="prev" title="PHP面试-并发">
+                PHP面试-并发 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://iocaffcdn.phphub.org/uploads/avatars/20736_1514188903.jpeg!/both/220x220" alt="jinxing.liu@qq.com">
+            
+              <p class="site-author-name" itemprop="name">jinxing.liu@qq.com</p>
+              <div class="site-description motion-element" itemprop="description">刘金星个人博客</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/blog/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/blog/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/myloveGy" title="GitHub &rarr; https://github.com/myloveGy" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:jinxing.liu@qq.com" title="E-Mail &rarr; mailto:jinxing.liu@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#目录"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#基础数据类型"><span class="nav-number"></span> <span class="nav-text">基础数据类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#预定义变量"><span class="nav-number"></span> <span class="nav-text">预定义变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#魔术函数"><span class="nav-number"></span> <span class="nav-text">魔术函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#魔术常量"><span class="nav-number"></span> <span class="nav-text">魔术常量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#COOKE和SESSION"><span class="nav-number"></span> <span class="nav-text">COOKE和SESSION</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#COOKIE"><span class="nav-number">0.0.1.</span> <span class="nav-text">COOKIE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SESSION"><span class="nav-number">0.0.2.</span> <span class="nav-text">SESSION</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设计模式"><span class="nav-number"></span> <span class="nav-text">设计模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#排序算法"><span class="nav-number"></span> <span class="nav-text">排序算法</span></a></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jinxing.liu@qq.com</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.1</div>
+
+
+
+
+
+<div>
+  <div class="theme-info">
+    优秀博客：
+      <a href="http://blog.fifsky.com/" rel="noopener" target="_blank">fifsky的技术笔记</a>
+    <span class="post-meta-divider">|</span>
+    <a href="http://www.littlebug.vip/" rel="noopener" target="_blank">littlebug</a>
+  </div>
+</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/blog/js/utils.js?v=7.1.1"></script>
+
+  <script src="/blog/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/blog/js/affix.js?v=7.1.1"></script>
+
+  <script src="/blog/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+  
+  <script src="/blog/js/scrollspy.js?v=7.1.1"></script>
+<script src="/blog/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/blog/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

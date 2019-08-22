@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/blog/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon.ico?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/blog/images/favicon.ico?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Pisces',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Window 环境安装MongoDB 下载安装 Mongodb 设置MongoDB 为wondows服务项( 配置环境变量 d:/MongoDB/bin) wind + R  cmd.exe 启动MongoDB 1mongod --logpath d:/server/mongo/logs/logs.txt --logappend --dbpath d:/server/mongo/data --di">
+<meta name="keywords" content="mongodb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB学习">
+<meta property="og:url" content="https://mylovegy.github.io/blog/2019/05/10/mongo/index.html">
+<meta property="og:site_name" content="刘金星个人博客">
+<meta property="og:description" content="Window 环境安装MongoDB 下载安装 Mongodb 设置MongoDB 为wondows服务项( 配置环境变量 d:/MongoDB/bin) wind + R  cmd.exe 启动MongoDB 1mongod --logpath d:/server/mongo/logs/logs.txt --logappend --dbpath d:/server/mongo/data --di">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-13T14:16:31.961Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MongoDB学习">
+<meta name="twitter:description" content="Window 环境安装MongoDB 下载安装 Mongodb 设置MongoDB 为wondows服务项( 配置环境变量 d:/MongoDB/bin) wind + R  cmd.exe 启动MongoDB 1mongod --logpath d:/server/mongo/logs/logs.txt --logappend --dbpath d:/server/mongo/data --di">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://mylovegy.github.io/blog/2019/05/10/mongo/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>MongoDB学习 | 刘金星个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">刘金星个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">个人博客</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <a href="https://github.com/myloveGy" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://mylovegy.github.io/blog/blog/2019/05/10/mongo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jinxing.liu@qq.com">
+      <meta itemprop="description" content="刘金星个人博客">
+      <meta itemprop="image" content="https://iocaffcdn.phphub.org/uploads/avatars/20736_1514188903.jpeg!/both/220x220">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刘金星个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MongoDB学习
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-10 10:35:40" itemprop="dateCreated datePublished" datetime="2019-05-10T10:35:40+08:00">2019-05-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-13 22:16:31" itemprop="dateModified" datetime="2019-05-13T22:16:31+08:00">2019-05-13</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Window-环境安装MongoDB"><a href="#Window-环境安装MongoDB" class="headerlink" title="Window 环境安装MongoDB"></a>Window 环境安装MongoDB</h3><ol>
+<li>下载安装 Mongodb</li>
+<li>设置MongoDB 为wondows服务项( 配置环境变量 d:/MongoDB/bin) wind + R  cmd.exe</li>
+<li><p>启动MongoDB</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongod --logpath d:/server/mongo/logs/logs.txt --logappend --dbpath d:/server/mongo/data --directoryperdb --serviceName MongoDB -install</span><br></pre></td></tr></table></figure>
+<p>参数说明</p>
+<ul>
+<li>–logpath             日志文件地址</li>
+<li>–logappend            添加日志的方式为追加</li>
+<li>–dbpath                指定MongoDB数据存放的路径</li>
+<li>–directoryperdb        MongoDB按照数据库的不同，针对每一个数据库都建立一个目录，所谓的“目录每数据库</li>
+<li>–auth                是否使用用户验证</li>
+<li>–serviceName        安装Windows服务时使用的服务名</li>
+<li>–install            安装MongoDB服务</li>
+</ul>
+<ol start="4">
+<li>启动MongoDB服务 net start MongoDB</li>
+<li>关闭MongoDB服务 net stop MongoDB</li>
+<li>使用MongoDB 需要先启动MongoDB 然后 mongo</li>
+</ol>
+</li>
+</ol>
+<h3 id="添加用户和角色"><a href="#添加用户和角色" class="headerlink" title="添加用户和角色"></a>添加用户和角色</h3><ol>
+<li>添加用户使用db.createUser( user , writeConcern ) 函数使用说明</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @param object user 			这个文档创建关于用户的身份认证和访问信息</span><br><span class="line"> * @param mixed writeConcern	这个文档描述保证MongoDB提供写操作的成功报告。</span><br><span class="line"> */</span><br><span class="line">var user = &#123;</span><br><span class="line">	&quot;user&quot;: &quot;root&quot;,								// 用户名</span><br><span class="line">	&quot;pwd&quot;: &quot;loveme&quot;,								// 密码</span><br><span class="line">	&quot;customData&quot;: &#123;employeeId: 12345&#125;,			// 用户说明</span><br><span class="line">	&quot;roles&quot;: [				</span><br><span class="line">		&#123;</span><br><span class="line">		    role: &quot;clusterAdmin&quot;, </span><br><span class="line">		    db: &quot;admin&quot;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">		    role: &quot;readAnyDatabase&quot;, </span><br><span class="line">		    db: &quot;admin&quot;</span><br><span class="line">		&#125;,</span><br><span class="line">		&quot;readWrite&quot;</span><br><span class="line">	]												// 用户角色</span><br><span class="line">&#125;;</span><br><span class="line">var write = &#123;w: &quot;majority&quot;, wtimeout: 5000&#125;;</span><br><span class="line">db.createUser(user, write);</span><br><span class="line">/*</span><br><span class="line">	Built-In Roles（内置角色）：</span><br><span class="line">		1. 数据库用户角色：read、readWrite;</span><br><span class="line">		2. 数据库管理角色：dbAdmin、dbOwner、userAdmin；</span><br><span class="line">		3. 集群管理角色：clusterAdmin、clusterManager、clusterMonitor、hostManager；</span><br><span class="line">		4. 备份恢复角色：backup、restore；</span><br><span class="line">		5. 所有数据库角色：readAnyDatabase、readWriteAnyDatabase、userAdminAnyDatabase、dbAdminAnyDatabase</span><br><span class="line">		6. 超级用户角色：root  </span><br><span class="line">		// 这里还有几个角色间接或直接提供了系统超级用户的访问（dbOwner 、userAdmin、userAdminAnyDatabase）</span><br><span class="line">		7. 内部角色：__system</span><br><span class="line">		PS：关于每个角色所拥有的操作权限可以点击上面的内置角色链接查看详情。</span><br><span class="line">	writeConcern文档( 官方说明 )</span><br><span class="line">		w选项：允许的值分别是 1、0、大于1的值、&quot;majority&quot;、&lt;tag set&gt;.</span><br><span class="line">		j选项：确保mongod实例写数据到磁盘上的journal（日志）,这可以确保mongd以外关闭不会丢失数据。设置true启用.</span><br><span class="line">		wtimeout：指定一个时间限制,以毫秒为单位。wtimeout只适用于w值大于1.</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<h4 id="登录验证"><a href="#登录验证" class="headerlink" title="登录验证"></a>登录验证</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mongo -u root -p loveme --authenticationDatabase test;</span><br><span class="line">db.auth(&quot;root&quot;, &quot;loveme&quot;) ; // 验证</span><br></pre></td></tr></table></figure>
+<h4 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.system.user.remove(&#123;&quot;user&quot;: &quot;root&quot;&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="MongoDB添加库"><a href="#MongoDB添加库" class="headerlink" title="MongoDB添加库"></a>MongoDB添加库</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 选择库</span><br><span class="line">use mydata</span><br><span class="line"></span><br><span class="line">// 删除库</span><br><span class="line">db.dropDatabase();</span><br></pre></td></tr></table></figure>
+<h4 id="MongoDB添加表"><a href="#MongoDB添加表" class="headerlink" title="MongoDB添加表"></a>MongoDB添加表</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 添加表</span><br><span class="line">db.createCollection(&quot;collection_name&quot;); </span><br><span class="line"></span><br><span class="line">// 删除表</span><br><span class="line">db.collection_name.drop() ;</span><br></pre></td></tr></table></figure>
+<h3 id="MongoDB-数据库操作"><a href="#MongoDB-数据库操作" class="headerlink" title="MongoDB 数据库操作"></a>MongoDB 数据库操作</h3><h4 id="新增数据-insert-和-save"><a href="#新增数据-insert-和-save" class="headerlink" title="新增数据 insert() 和 save()"></a>新增数据 insert() 和 save()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 新增数据时&apos;_id&apos; 不赋值默认自带赋值</span><br><span class="line">/**</span><br><span class="line"> * db.collection_name.insert() 添加数据</span><br><span class="line"> * @param object objNew 新增数据</span><br><span class="line"> */</span><br><span class="line"> db.user.insert(&#123;&quot;_id&quot;: 1, &quot;name&quot;: &quot;lovemeljx&quot;&#125;);</span><br><span class="line"> </span><br><span class="line">/**</span><br><span class="line"> * db.collection_name.save( objNew ) </span><br><span class="line"> * 新增数据(_id存在不新增)</span><br><span class="line"> * @param object objNew 更新的对象</span><br><span class="line"> */</span><br><span class="line">db.td_user.save(&#123;&quot;name&quot;: &quot;123&quot;, &quot;username&quot;: &quot;ljx&quot;&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="查询-find"><a href="#查询-find" class="headerlink" title="查询 find()"></a>查询 find()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.collection_name.find() ;	</span><br><span class="line">// 查询所有 SQL: SELECT * FROM `user` ;	</span><br><span class="line">db.user.find() ;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>指定返回指定的列 ( 键 ) </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SQL：SELECT `name`,`age` FROM `user` ;</span><br><span class="line"></span><br><span class="line">db.user.find(&#123;&#125;, &#123;&quot;name&quot;: 1, &quot;age&quot;: 1&#125;) ;</span><br><span class="line">/* 补充说明:第一个&#123;&#125; 放where条件 第二个&#123;&#125; 指定那些列显示和不显示( 0 不显示 1 显示) */</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>WHERE 条件 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SQL: SELECT `name`,`age` FROM `user` WHERE `name`=&apos;123&apos; ;</span><br><span class="line"></span><br><span class="line">db.user.find(&#123;&quot;name&quot;: &quot;123&quot;&#125;, &#123;&quot;name&quot;: 1, &quot;age&quot;: 1&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 AND </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SQL: SELECT * FROM `user` WHERE `name`=&apos;123&apos; AND `age`=21 ;</span><br><span class="line"></span><br><span class="line">db.user.find(&#123;&quot;name&quot;: &quot;123&quot;, &quot;age&quot;: 21&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 OR( $or ) </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SQL: SELECT * FROM `user` WHERE `name`=&apos;123&apos; OR `age`=21 ;</span><br><span class="line"></span><br><span class="line">db.user.find(&#123;&quot;$or&quot;: [&#123;&quot;name&quot;: &quot;123&quot;&#125;, &#123;&quot;age&quot;: 18&#125;&#125;]&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 &lt; &lt;= &gt; &gt;= !=( $lt , $lte , $gt , $gte , $ne ) </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SQL: SELECT * FROM `user` WHERE `id`&gt;1 AND `id`&lt;=3 ;</span><br><span class="line"></span><br><span class="line">db.user.find(&#123;&quot;_id&quot;: &#123;&quot;$gt&quot;: 1, &quot;$lte&quot;: 3&#125;&#125;) ;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 IN NOT IN ( $in , $nin )</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SQL: SELECT * FROM `user` WHERE `id` IN (1,3,5) ;</span><br><span class="line"></span><br><span class="line">db.user.find(&#123;&quot;_id&quot;: &#123;&quot;$in&quot;: [1, 2, 5]&#125;&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>匹配 null </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SQL: SELECT * FROM `user` WHERE `name` IS NULL ;</span><br><span class="line"></span><br><span class="line">db.user.find(&#123;&quot;name&quot;: null&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>LIKE模糊查询 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SQL: SELECT * FROM `user` WHERE `name` LIKE &apos;%123%&apos;;</span><br><span class="line"></span><br><span class="line">db.user.find(&#123;&quot;name&quot;: /123/&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>去掉重复的数据 DISTINCT </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SQL: SELECT DISTINCT(`name`) FROM `user`;</span><br><span class="line"></span><br><span class="line">db.user.distinct(&quot;name&quot;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>统计查询 COUNT </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SQL: SELECT COUNT(*) FROM `user`;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 查询统计条件可以传参数</span><br><span class="line"> * db.user.count(&#123;&quot;name&quot;: &quot;123&quot;&#125;);</span><br><span class="line"> * db.find(&#123;&quot;name&quot;: &quot;123&quot;&#125;).count();</span><br><span class="line">*/</span><br><span class="line">db.user.count() ;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>判断一个元素是否存在 $exists</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.td_user.find(&#123;&quot;username&quot;: &#123;&quot;$exists&quot;: true&#125;&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>取反 $not</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.td_user.find(&#123;&quot;username&quot;: &#123;&quot;$not&quot;: /123/&#125;&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>sort()排序条件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 1 正序 -1 倒序</span><br><span class="line">db.user.find().sort(&#123;&quot;_id&quot;: -1&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查询条数limit();</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.user.find().limit(10);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查询5-10间的数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.user.find().limit(5).skip(5);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>16.数组查询(MongoDB特有)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * skills = [&quot;java&quot;, &quot;php&quot;, &quot;javascript&quot;, &quot;python&quot;] ;</span><br><span class="line"> */</span><br><span class="line"> </span><br><span class="line">// 找到skills</span><br><span class="line">db.user.find(&#123;&quot;skills&quot;: &quot;php&quot;&#125;);</span><br><span class="line"></span><br><span class="line">// $all ** 必须同时包含</span><br><span class="line">db.user.find(&#123;&quot;skills&quot;: &#123;&quot;$all&quot;: [&quot;java&quot;, &quot;php&quot;]&#125;&#125;);</span><br><span class="line"></span><br><span class="line">// $size ** 数组长度等于</span><br><span class="line">db.user.find(&#123;&quot;skills&quot;: &#123;&quot;$size&quot;: 2&#125;&#125;);</span><br><span class="line"></span><br><span class="line">// $slice ** </span><br><span class="line">db.user.find(&#123;&quot;skills&quot;: &#123;&quot;$slice&quot;: [1, 1]&#125;&#125;);</span><br></pre></td></tr></table></figure></p>
+<h4 id="修改-update-AND-save"><a href="#修改-update-AND-save" class="headerlink" title="修改 update() AND save()"></a>修改 update() AND save()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * db.collection_name.update(criteria, objNew, upsert, multi) </span><br><span class="line"> * @param object 	criteria 查询条件对象</span><br><span class="line"> * @param object	objNew	 更新的操作</span><br><span class="line"> * @param boolean	upsert   不存在是否添加</span><br><span class="line"> * @param boolean  	multi 	 是否全部跟新</span><br><span class="line"> */</span><br><span class="line"> db.user.update(criteria, objNew, upsert, multi)</span><br><span class="line">``` </span><br><span class="line">1. 修改一条数据</span><br></pre></td></tr></table></figure>
+<p>db.td_user.update({“username”: “123”},  {$set: {“username”: 456}});<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2. 全部修改</span><br></pre></td></tr></table></figure></p>
+<p>db.td_user.update({“user”: “test”}, {$set: {“name”: “my-test”}}, false, true);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">3. 不存在添加一条</span><br></pre></td></tr></table></figure></p>
+<p>db.td_user.update({“user”: “my-test”}, {$set: {“user”: “test”}}, true, false);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">4. 添加所有</span><br></pre></td></tr></table></figure></p>
+<p>db.td_user.update({“user”: “my-test”}, {$set: {“user”: “test”}}, true, true);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">5. 全更新了</span><br></pre></td></tr></table></figure></p>
+<p>db.td_user.update({“count”: {$gt: 15}}, {$inc: {“count”: 1}}, false, true);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">6. 只更新了第一条</span><br></pre></td></tr></table></figure></p>
+<p>db.td_user.update({“count”: {$gt: 10}}, {$inc: {“count”: 1}}, false, false);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">##### 跟新说明</span><br><span class="line"></span><br><span class="line">* $inc 一个数字字段field增加value(数字)</span><br></pre></td></tr></table></figure></p>
+<p>db.td_user.update({“username”: “love”}, {$inc: {“age”: 2}});<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* $set 修改值(所有值都支持)</span><br></pre></td></tr></table></figure></p>
+<p>db.td_user.update({“username”: “loveme”}, {$set: {“username”: “mylove”}});<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* $unset 删除字段</span><br></pre></td></tr></table></figure></p>
+<p>db.td_user.update({“username”: “mylove”}, {$unset: {“age”: 1}});<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* $push 将值追加到数组中</span><br></pre></td></tr></table></figure></p>
+<p>db.td_user.update({“username”: “mylove”}, {$push: {“age”: 23}});<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 删除和修改数据 remove() AND findAndModify() AND runCommand() </span><br><span class="line">1. remove</span><br></pre></td></tr></table></figure></p>
+<p>/**</p>
+<ul>
+<li>remove( criteria ) </li>
+<li>@param object criteria 查询删除的对象<br>*/<br>db.user.remove({“_id”: 0});<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2. findAndModify</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>findAndModify( objNew ) objNew.remove 和 objNew.update 不能同时存在 runCommand()同</li>
+<li>@param objNew.query     查询对象</li>
+<li>@param objNew.sort      排序条件</li>
+<li>@param objNew.update 修改的数据</li>
+<li>@param objNew.remove 是否删除数据<br>*/<br>db.user.findAndModify({<br> query: {“_id”: 1},<br> sort: {“_id”: -1},<br> update: {$set: {“username”: “loveme_user”}},<br> remove: false,<br>});</li>
+</ul>
+<p>for ( var i = 100 ; i&lt; 200 ; i ++  ) {<br>    db.user.save({<br>        “<em>id”: i + 1,<br>        “username”: “loveme</em>“ + i,<br>        “age” : 22<br>    });<br>}<br><code>`</code></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/mongodb/" rel="tag"># mongodb</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2019/05/09/php-concurrent/" rel="next" title="PHP面试-并发">
+                <i class="fa fa-chevron-left"></i> PHP面试-并发
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2019/05/10/php-mongo/" rel="prev" title="PHP操作MongoDB">
+                PHP操作MongoDB <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://iocaffcdn.phphub.org/uploads/avatars/20736_1514188903.jpeg!/both/220x220" alt="jinxing.liu@qq.com">
+            
+              <p class="site-author-name" itemprop="name">jinxing.liu@qq.com</p>
+              <div class="site-description motion-element" itemprop="description">刘金星个人博客</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/blog/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/blog/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/myloveGy" title="GitHub &rarr; https://github.com/myloveGy" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:jinxing.liu@qq.com" title="E-Mail &rarr; mailto:jinxing.liu@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Window-环境安装MongoDB"><span class="nav-number">1.</span> <span class="nav-text">Window 环境安装MongoDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加用户和角色"><span class="nav-number">2.</span> <span class="nav-text">添加用户和角色</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#登录验证"><span class="nav-number">2.1.</span> <span class="nav-text">登录验证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除用户"><span class="nav-number">2.2.</span> <span class="nav-text">删除用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MongoDB添加库"><span class="nav-number">2.3.</span> <span class="nav-text">MongoDB添加库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MongoDB添加表"><span class="nav-number">2.4.</span> <span class="nav-text">MongoDB添加表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB-数据库操作"><span class="nav-number">3.</span> <span class="nav-text">MongoDB 数据库操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#新增数据-insert-和-save"><span class="nav-number">3.1.</span> <span class="nav-text">新增数据 insert() 和 save()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查询-find"><span class="nav-number">3.2.</span> <span class="nav-text">查询 find()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改-update-AND-save"><span class="nav-number">3.3.</span> <span class="nav-text">修改 update() AND save()</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jinxing.liu@qq.com</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.1</div>
+
+
+
+
+
+<div>
+  <div class="theme-info">
+    优秀博客：
+      <a href="http://blog.fifsky.com/" rel="noopener" target="_blank">fifsky的技术笔记</a>
+    <span class="post-meta-divider">|</span>
+    <a href="http://www.littlebug.vip/" rel="noopener" target="_blank">littlebug</a>
+  </div>
+</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/blog/js/utils.js?v=7.1.1"></script>
+
+  <script src="/blog/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/blog/js/affix.js?v=7.1.1"></script>
+
+  <script src="/blog/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+  
+  <script src="/blog/js/scrollspy.js?v=7.1.1"></script>
+<script src="/blog/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/blog/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
