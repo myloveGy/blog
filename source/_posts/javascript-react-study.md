@@ -7,6 +7,9 @@ tags:
 - javascript
 ---
 
+# react 学习笔记
+[TOC]
+
 ## ES6 基础
 
 ### 一. 变量的解构赋值
@@ -65,7 +68,7 @@ let {a = 1, b = 456, c = 1} = {b: true, c: null}
 
 * 解构对象的字段都是普通类型，是值拷贝 
 
-```
+```js
 let object1 = {a: 1, b: 2, c: 3}
 
 let {...object2} = object1
@@ -184,12 +187,17 @@ const f = ({username, age}) => ({username, age})
     
     ```
     
+	4. ...操作符用于函数传参数，表示将数组各个元素传递给函数参数
+	
+	```js
+	[1, 2, 3].push(...[4, 5, 6])
+	```
 
 ### 二. 箭头函数的使用
 
 #### 1. 定义
 
-```
+```js
 // 不要参数
 var x1 = () => {
     console.info(123)
@@ -288,7 +296,7 @@ function Person(){
 
 ```
 
-### 3. 其他补充
+### 三. 其他补充
 
 #### 1. 对象字段的简写
 
@@ -350,7 +358,42 @@ import user from './a.js'
 
 ## React 基础
 
-### 一、定义组件
+创建一个 React 的单页应用
+
+```bash
+npx create-react-app my-app
+cd my-app
+npm start
+```
+
+### 一、JSX语法
+
+JSX，是一个 JavaScript 的语法扩展
+
+#### 1、使用
+
+```js
+	const element = <h1>测试</h1>
+```
+
+#### 2、使用表达式和变量
+
+```js
+	const username = "my-test"
+	const element = (
+		<h1 className={'test'} style={{textAlign: 'center'}} title="123">
+			{username}
+			{username === 'my-test' ? '1' : '2'}
+			<input disabled />
+		</h1>
+	)
+```
+
+- 属性 使用`{}`包起来的表示变量或者表达式,如果使用`""`包起来表示简单的字符串
+- 属性定义了但没有给值 默认为 `true`
+
+
+### 二、定义组件
 
 #### 1. 使用类定义
 
@@ -378,13 +421,11 @@ const MyComponent = props => {
 
 ```
 
-
 #### 3. 注意事项
 
 * 组件命名必须组照大驼峰命名法 
 * 渲染class类名，需要使用className
 * 渲染style时候，必须使用对象，并且字段需要使用小驼峰法 例如：font-size: "16px" 需要写为 fontSize: "16px"
-
 
 ```js
 const MyComponent = props => {
@@ -400,7 +441,7 @@ const MyComponent = props => {
 
 * render 函数里面渲染的时候，最外层必须要一个父级标记，不允许同时出现两个同级外层标签
 
-```
+```js
 // 正确
 const MyComponent = props => {
     return (
@@ -419,8 +460,7 @@ const MyComponent = props => {
 
 ```
 
-#### react 允许外层不适用外层标签、即允许两个同级标签，不过需要使用Fragment 标签标记
-
+##### react 允许外层不适用外层标签、即允许两个同级标签，不过需要使用Fragment 标签标记
 
 ```js
 
@@ -437,7 +477,7 @@ const MyComponent = props => {
 
 ```
 
-#### 出于安全考虑的原因（XSS 攻击），在 React.js 当中所有的表达式插入的内容都会被自动转义,如果需要使用html 标记必须使用dangerouslySetInnerHTML
+##### 出于安全考虑的原因（XSS 攻击），在 React.js 当中所有的表达式插入的内容都会被自动转义,如果需要使用html 标记必须使用dangerouslySetInnerHTML
 
 ```js
 import React, {Component} from 'react'
@@ -455,8 +495,58 @@ export default class MyComponent extends Component {
 }
 
 ```
+#### 4、state和生命周期
 
-### 二、组件传参
+`state` 相当于 `vue` 的 `data`
+
+修改`state` 必须使用 `this.setState()` 函数
+
+[详细的生命周期](https://react.docschina.org/docs/react-component.html)
+
+- constructor() 初始化
+- render() 渲染
+- componentDidMount() 挂载之后
+
+#### 5、条件渲染&循环
+
+1. 条件渲染
+	- 可以使用 `&&` 操作符 
+	- 可以使用 三元运算符 `?:`
+
+	```js
+	const MyComponent = props => {
+
+		return <div>
+			{this.props.title && <h1>{this.props.title}<h1>}
+			
+			{this.props.content ? <div>{this.props.conent}</div> : ''}
+			
+			{0 && <div>123</div>}
+		</div>
+	}
+	```
+	
+	注意： 使用 `&&` 操作符的时候，前面表达式最好是一个布尔值 
+	
+2. 列表渲染
+	- 需要给同级元素一个唯一的`key`
+	- 如果是数组变量可以直接渲染 
+	```js
+	const MyComponent = props => {
+		const items = [1, 2, 3]
+		return <div>
+			{items}
+			
+			{items.map(v => v)}
+			
+			<ul>
+				{item.map(v => <li key={v}>{v}</li>)}
+			</ul>
+		</div>
+	}
+	```
+
+### 三、组件传参
 
 #### 父组件传参给子组件直接像html标签属性一样
 
@@ -503,7 +593,7 @@ export default class Children extends Component {
 
 ```
 
-### 三、默认传参defaultProps
+### 四、默认传参defaultProps
 
 ```js
 import React, {Component} from 'react'
@@ -529,17 +619,17 @@ export default class Children extends Component {
 
 ```
 
-### 四、PropTypes 和组件参数验证
+### 五、PropTypes 和组件参数验证
 
 1. 需要引入React 提供的第三方库 prop-types
 
-```
+```shell
 npm install --save prop-types
 ```
 
 2. [使用说明](https://react.docschina.org/docs/typechecking-with-proptypes.html)
 
-```jsx
+```js
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
@@ -552,14 +642,19 @@ class Item extends Component {
 }
 ```
 
-### 五、组件的事件处理
+### 六、组件的事件处理
+
+- React 事件的命名采用小驼峰式（camelCase），而不是纯小写。
+- 使用 JSX 语法时你需要传入一个函数作为事件处理函数，而不是一个字符串。
 
 #### 1. 绑定事件时候 this 指向问题
+
+##### [文档](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)
 
 ```js
 
 class Item extends Component {
-    
+
     name = '按钮'
     
     handleClick() {
@@ -628,7 +723,7 @@ class Item extends Component {
 
 #### 2. 绑定事件的时候，添加传递参数
 
-```
+```js
 
 class Item extends Component {
 
@@ -690,6 +785,7 @@ class Parent extends Component {
 
 ```
 
+
 ##### 使用箭头函数解决传递参数问题
 
 * 通过箭头函数返回函数实现 注意箭头函数的写法 () => () => {}
@@ -736,7 +832,7 @@ class Parent extends Component {
 }
 ```
 
-### 六、... 操作符在 JSX 语法中常用方式
+### 七、... 操作符在 JSX 语法中常用方式
 
 #### 1. 接收剩余传递参数
 
@@ -783,5 +879,297 @@ const defaultProps = {
 <button type={defaultProps.type} onClick={defaultProps.onClick} className={defaultProps.className} style={defaultProps.style}>按钮</button>
 
 ```
+
+### 八、高阶组件
+
+1. 定义高阶组件
+	就是像定义普通函数一样，不过第一个参数是一个组件，而且必须要返回一个组件
+	
+	```js
+	const hocComponent = WrappedComponent => {
+
+	  class HocComponent extends Component {
+		render() {
+		  return <WrappedComponent style={{padding: '5px', borderRadius: '3px'}} {...this.props}/>
+		}
+	  }
+
+	  // 这个是约定： 需要定义一个displayName属性，方便调试
+	  HocComponent.displayName = `HocComponent(${getDisplayName(WrappedComponent)})`
+	  
+	  return HocComponent
+	}
+	
+	// 使用
+	const Button = props => {
+	  return <button {...props}>{props.children}</button>
+	}
+
+	const HocButton = hocComponent(Button)
+	
+	```
+
+2. 高阶组件静态属性的导出(务必复制静态方法)
+	- 默认不会导出静态属性，需要手动去导出
+	- 使用[`hoist-non-react-statics`](https://github.com/mridgway/hoist-non-react-statics) 
+	
+3. 高阶组件ref问题
+	- refs 提供了一种方式，允许我们访问 DOM 节点或在 render 方法中创建的 React 元素。
+	- 默认 ref 指向高阶组件自己，如果需要转发到被高阶组件包裹的组件中，要用到refs转发
+
+### 九、Context
+
+Context 提供了一个无需为每层组件手动添加 props，就能在组件树间进行数据传递的方法
+
+四个API:
+	- React.createContext
+	- Context.Provider
+	- Class.contextType
+	- Context.Consumer
+	
+## 我们项目中常用组件
+
+[基于 Ant Design Pro](https://pro.ant.design/docs/getting-started-cn)
+[Ant Design of React UI库](https://ant.design/docs/react/introduce-cn)
+
+### 一、表格组件`CTable`
+
+```js
+	<CTable columns={[....]} api={queryApi} btnClick={this.handleClick} />
+```
+
+常用的属性列表
+
+|属性名|类型|说明|
+|:-----|:------|:-----|
+|`columns`|`array`|表格字段信息|
+|`api`|`function`|表格数据来源API|
+|`btnClick`|`(key, rows) => {}`|表格操作项点击事件处理|
+|`index`|`string` or `function`|表格每一行唯一的key|
+|`filters`|`object`|查询的默认条件|
+
+其他说明
+
+`columns`中，元素配置 `_render` 表示生成操作项，配置格式 `{key: 'update', title: '修改'}` 
+或者 `[{key: 'update', title: '修改'}]`, 点击事件交给表格的 `btnClick` 函数处理  
+
+```jsx
+<CTable 
+	columns={[
+		{title: 'ID', dataIndex: 'id'},
+		{
+			title: '操作', 
+			_render: [
+				{key: 'update', title: '修改'},
+				[
+					{key: 'delete', title: '删除'},
+					{key: 'offline', title: '启用'},
+				],
+			]
+		}
+	]} 
+	api={queryApi} 
+	btnClick={this.handleClick} 
+/>
+```
+
+需要后端服务器返回数据格式
+
+```json
+{
+	code: 10000,
+	data: {
+		items: [...],
+		page: {
+			total: 10,
+			current: 1,
+			pageSize: 10,
+		}
+	},
+	message: "success",
+}
+```
+
+如果不需要分页， `page` 返回 `false`
+
+### 二、表单组件`CForm`
+
+1. `CForm` 表单组件
+
+```jsx
+	<CForm rules={{name: [{required: true, message: '不能为空'}]}} onSubmit={(values) => {
+		console.info(values)
+	}}>
+		<CInput name="name" label="名称"/>
+	</CForm>
+```
+
+常用的属性列表
+
+|属性名|类型|说明|
+|:-----|:------|:-----|
+|`rules`|`object`|表单字段验证信息|
+|`onSubmit`|`(values) => {}`|表单提交事件处理|
+|`initialValue`|`object`|表单字段初始值数据|
+
+2. `CInput` Input 输入框
+
+```jsx
+	<CInput name="name" label="名称" />
+```
+常用的属性列表
+
+|属性名|类型|说明|
+|:-----|:------|:-----|
+|`name`|`string`|表单字段名称(`html` `input` 元素的`name`属性,可以是 ：`name="user[name]"` |
+|`label`|`string`| label 名称 |
+|`initialValue`|`mixed`|表单字段的初始值|
+|`show`|`(values) => boolean`|显示处理函数，`values`表示所有表单的值，需要返回`ture`表示渲染|
+
+	
+## JS异步
+
+### 一、异步示例
+
+```js
+for (var i = 0; i < 10; i ++) {
+	setTimeout(function () {
+	  console.info(i)
+	}, 1000)
+}
+```
+
+### 二、使用`Promise`对象
+
+>所谓 Promise，简单说就是一个容器，里面保存着某个未来才会结束的事件（通常是一个异步操作）的结果。
+
+Promise对象特点：
+1. 对象的状态不受外界影响。Promise对象代表一个异步操作，有三种状态：pending（进行中）、fulfilled（已成功）和rejected（已失败）。
+2. 一旦状态改变，就不会再变，任何时候都可以得到这个结果。
+
+#### 1. 定义`Promise`对象
+
+`Promise` 函数有两个参数 `resolve` 和 `reject`，这两个参数都是函数
+	- resolve 表示成功返回
+	- reject 表示错误返回
+	
+```js
+const handle = () => {
+	return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        alert('加载完成了')
+        resolve('执行完成')
+      }, 2000)
+	  
+	  // 如果失败 reject()
+    })
+}
+```
+
+#### 2. 使用`Promise`对象
+
+- `then` 表示 `resolve` 后的回调函数;参数是 `resolve` 返回
+- `catch` 表示 `reject` 后的回调函数;参数是 `reject` 返回 
+- `finally` 表示不管是`resolve` 还是 `reject` 都会执行的回调
+
+```js
+handle().then(value => {
+	console.info(value)
+}).catch(error => {
+	console.info(error)
+}).finally(() => {
+	console.info('我都呗执行了')
+})
+```
+
+### 三、使用`co`包
+
+为什么使用`co` 
+- 解决异步回调的嵌套
+- 让异步回调，同步的形式执行
+
+例如： 发送一个异步请求，但这个请求依赖于另一个异步请求
+
+```js
+
+// jquery.ajax 写法
+$.ajax({
+	url: 'a.php',
+	type: 'get',
+	dataType: 'json',
+	success: function (data) {
+		$.ajax({
+			url: 'b.php',
+			type: 'get',
+			dataType: 'json',
+		}).done(function (data) {
+			console.info(123)
+		})
+	}
+})
+
+// 使用 Promise 同样存在这样的问题
+const handle = (a) => {
+	return new Promise(resolve => {
+		console.info(a)
+		setTimeout(() => {
+			resolve(a)
+		}, 1000)
+	})
+}
+
+handle(1).then(value => {
+	console.info(value)
+	return handle(2)
+}).then(val => {
+	console.info(val)
+})
+
+// 使用 co 包
+co(function *() {
+	const a = yield handle(1)
+	const b = yield handle(a)
+	console.info(a, b)
+})
+```
+
+### 四、使用`async`函数
+
+`async` 函数是 ES2017 标准引入的，是生成器函数的语法糖 
+
+使用 `async` 就是将 生成器函数的 `*` 改为 `async`, 将 `yield` 改为 `await`
+
+```js
+
+const handle = (x) => {
+	return new Promise(resolve => {
+		setTimeout(() => {
+			console.info(x)
+			resolve(x + 1)
+		}, 1000)
+	})
+} 
+
+(async () => {
+	const a = await handle(1)
+	const b = await handle(a)
+	console.info(a, b)
+})()
+
+```
+
+`async` 返回的还是一个 `Promise` 所以可以继续调用 `then`,`catch`,`finally` 
+
+```js
+(async () => {
+	const a = await handle(1)
+	const b = await handle(a)
+	console.info(a, b)
+})()
+.then(v => console.info(v))
+.catch(error => console.info(error))
+```
+
+
 
 
