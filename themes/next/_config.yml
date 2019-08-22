@@ -227,7 +227,7 @@ avatar:
   # In theme directory (source/images): /images/avatar.gif
   # In site directory (source/uploads): /uploads/avatar.gif
   # You can also use other linking images.
-  url: 'https://iocaffcdn.phphub.org/uploads/avatars/20736_1514188903.jpeg!/both/220x220'
+  url: 'http://b337.photo.store.qq.com/psb?/V113yP6J3Q8KRH/VwlDaninBuZQcfDNwE7bzqklNPxvb3aZ7be5VebwG*I!/b/dOvB4sh*IQAA&bo=gAJVA7AEQAYBGBk!&rf=viewer_4!/both/220x220'
   # If true, the avatar would be dispalyed in circle.
   rounded: true
   # The value of opacity should be choose from 0 to 1 to set the opacity of the avatar.
